@@ -1,24 +1,159 @@
-import fastify from 'fastify';
+import fastify from "fastify";
+import fastifyEnv from "@fastify/env";
+import { bootstrap } from "fastify-decorators";
+import cors from "@fastify/cors";
+import { initializeClients } from "./clients";
+import swagger from "@fastify/swagger";
+import swagger_ui from "@fastify/swagger-ui";
+import { logger } from "./common/services/logger.service";
+import fs from "fs";
+import fastifyMultipart from "fastify-multipart";
 
-const app = fastify();
+// Env schema
+const schema = {
+  type: "object",
+  required: [],
+  patternProperties: {
+    "SERVER_(.*)": { type: "string" },
+  },
+  // add key properties for specific property validation
+};
 
-// Define a simple route
-app.get('/', async (request, reply) => {
-  return { hello: 'world' };
+const app = fastify({ 
+  logger: {
+    level: "info",
+    transport: {
+      target: "pino-pretty",
+      options: {
+        colorize: true,
+        translateTime: "SYS:standard",
+        ignore: "pid,hostname,name",
+      },
+    },
+    redact: ["req.headers.authorization"]
+  } 
 });
 
-// Start the server using FastifyListenOptions
-const start = async () => {
-  try {
-    await app.listen({
-      port: 3000, // or you can use "host" and "port" together here
-      host: '0.0.0.0',
+
+// Env path for stages
+const envPath = process.env.NODE_ENV
+  ? `./.env.${process.env.NODE_ENV}`
+  : "./.env";
+
+const packageJSON = JSON.parse(fs.readFileSync("./package.json", "utf8"));
+
+export const configure = async () => {
+  // Register handlers auto-bootstrap
+  app.register(fastifyEnv, {
+    schema: schema,
+    dotenv: { path: envPath },
+    data: process.env,
+  });
+
+  await app.after();
+
+  app
+    .register(fastifyMultipart)
+    .register(swagger, {
+      mode: "dynamic",
+      swagger: {
+        info: {
+          title: packageJSON.title,
+          description: packageJSON.description,
+          version: packageJSON.version,
+          contact: {
+            name: packageJSON.author,
+            url: packageJSON.website,
+            email: packageJSON.email,
+          },
+        },
+        // basePath: '',
+        schemes: ["http", "https"],
+        consumes: ["application/json"],
+        produces: ["application/json"],
+      },
+
+      openapi: {
+        info: {
+          title: packageJSON.title,
+          description: packageJSON.description,
+          version: packageJSON.version,
+          contact: {
+            name: packageJSON.author,
+            url: packageJSON.website,
+            email: packageJSON.email,
+          },
+        },
+        components: {
+          securitySchemes: {
+            bearerAuth: {
+              type: "apiKey",
+              name: "Authorization",
+              in: "header",
+            },
+          },
+        },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+      },
+    })
+    .register(swagger_ui, {
+      routePrefix: "/documentation",
+      uiConfig: {
+        docExpansion: "none",
+        deepLinking: true,
+      },
+      staticCSP: false,
+      transformStaticCSP: (header) => header,
+      transformSpecification: (swaggerObject) => {
+        return swaggerObject;
+      },
+      transformSpecificationClone: true,
     });
-    console.log('Server listening on http://localhost:3000');
-  } catch (err) {
-    console.error(err);
-    process.exit(1);
+
+  app
+    .register(cors, {
+      origin: ["*"],
+      methods: ["OPTIONS", "GET", "PUT", "PATCH", "POST", "DELETE"],
+      allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "Accept",
+        "Origin",
+        "X-Requested-With",
+        "x-api-key",
+      ],
+    })
+    .register(initializeClients)
+    .register(bootstrap, {
+      // Specify directory with our controllers
+      directory: new URL(`controllers`, import.meta.url),
+
+      // Specify mask to match only our controllers
+      mask: /\.controller\./,
+    });
+
+  try {
+    await app.ready();
+  } catch (error) {
+    console.log("An error occurred during initialization:", error);
+  }
+
+  if (!global.LAMBDA_ENV) {
+    console.log("Running App env");
+
+    app.listen({ port: Number(process.env.SERVER_PORT) }, (err: any) => {
+      if (err) console.error(err);
+      console.log(`server listening on ${process.env.SERVER_PORT}`);
+    });
   }
 };
 
-start();
+if (!global.LAMBDA_ENV) {
+  configure();
+}
+
+export default app;
