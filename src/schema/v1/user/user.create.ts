@@ -4,15 +4,6 @@ import { commonErrorResponses } from "../commonErrorCodes";
 export const createUserSchema: FastifySchema = {
   description: "API to create a User",
   tags: ["Register"],
-  querystring: {
-    type: "object",
-    properties: {
-      referralCode: {
-        type: "string",
-        nullable: true, // This makes it optional
-      },
-    },
-  },
   body: {
     type: "object",
     properties: {
