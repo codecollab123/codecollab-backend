@@ -9,7 +9,7 @@ import {
   BadRequestError,
   ConflictError,
   ServerError,
-} from "./error";
+} from "./errors";
 import {
   FastifyInstanceToken,
   Inject,

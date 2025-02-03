@@ -1,6 +1,6 @@
 import { Hook } from "fastify-decorators";
 import { BaseController } from "./base.controller";
-import { BadTokenError } from "./error";
+import { BadTokenError } from "./errors";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { RESPONSE_MESSAGE, STATUS_CODES } from "../common/constants";
 
