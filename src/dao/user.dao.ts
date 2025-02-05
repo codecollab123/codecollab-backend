@@ -12,7 +12,7 @@ export class UserDAO extends BaseDAO {
     this.model = UserModel;
   }
 
-  async createUser(userData: IUser) {
+  async createUser(userData: createUser) {
     try {
       const createdUser = await this.model.create(userData);
       return createdUser;

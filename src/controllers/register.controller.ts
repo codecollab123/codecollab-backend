@@ -21,7 +21,7 @@ export default class RegisterController extends BaseController {
   @POST(USER_ENDPOINT, { schema: createUserSchema })
   async create(
     request: FastifyRequest<{
-      Body: IUser;
+      Body: createUser;
     }>,
     reply: FastifyReply,
   ) {
