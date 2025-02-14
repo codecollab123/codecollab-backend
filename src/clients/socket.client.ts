@@ -26,6 +26,7 @@ export namespace SocketClient {
         socket.join(room_id);
         const clients = getAllConnectedClients(room_id);
         logger.info(clients);
+        io.to(room_id).emit("user joined",{users:clients});
       })
 
       // Handle message from the client
