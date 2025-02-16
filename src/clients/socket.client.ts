@@ -1,48 +1,57 @@
 import { FastifyInstance } from "fastify";
-import { Server } from "socket.io";  
+import { Server } from "socket.io";
 import { logger } from "../common/services/logger.service";
 
 export namespace SocketClient {
   export async function init(fastify: FastifyInstance) {
-    // Create the socket.io server with CORS settings
     const io = new Server(fastify.server, {
       cors: {
-        origin: "http://localhost:3000", // Allow frontend requests
-        methods: ["GET", "POST"], // Allow these HTTP methods
-        credentials: true, // Allow cookies or authentication headers
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+        credentials: true,
       },
     });
 
-    const userSocketMap: Record<string, string> = {};
+    const userSocketMap: Record<string, { userName: string; roomId: string }> = {};
 
     function getAllConnectedClients(room_id: string) {
       return Array.from(io.sockets.adapter.rooms.get(room_id) || []).map((socketId) => ({
         socketId,
-        userName: userSocketMap[socketId],
+        userName: userSocketMap[socketId]?.userName || "Unknown",
       }));
     }
 
-    // Handle new WebSocket connections
     io.on("connection", (socket) => {
-      logger.info(`A user connected ${socket.id}`);
+      logger.info(`User connected: ${socket.id}`);
 
       socket.on("join", ({ room_id, userName }) => {
-        userSocketMap[socket.id] = userName;
+        // Check if user already has a socket connected
+        const existingSocketId = Object.keys(userSocketMap).find(
+          (id) => userSocketMap[id]?.userName === userName
+        );
+      
+        if (existingSocketId) {
+          io.to(existingSocketId).emit("forced_disconnect"); // Disconnect old socket
+          io.sockets.sockets.get(existingSocketId)?.disconnect();
+          delete userSocketMap[existingSocketId];
+        }
+      
+        // Store new socket
+        userSocketMap[socket.id] = { userName, roomId: room_id };
         socket.join(room_id);
-        const clients = getAllConnectedClients(room_id);
-        logger.info(clients);
-      })
-
-      // Handle message from the client
-      socket.on("message", (msg) => {
-        logger.info("Message received: ", msg);
-        socket.emit("message", "Hello from server!");
+        io.to(room_id).emit("user_joined", { users: getAllConnectedClients(room_id) });
       });
+      
 
-      // Handle disconnect event
       socket.on("disconnect", () => {
-        logger.info(`User disconnected: ${socket.id}`);
+        const { roomId } = userSocketMap[socket.id] || {};
         delete userSocketMap[socket.id];
+
+        if (roomId) {
+          io.to(roomId).emit("user_joined", { users: getAllConnectedClients(roomId) });
+        }
+
+        logger.info(`User disconnected: ${socket.id}`);
       });
     });
 
