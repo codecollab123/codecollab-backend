@@ -3,6 +3,7 @@ import { BaseController } from "./base.controller";
 import { BadTokenError } from "./errors";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { RESPONSE_MESSAGE, STATUS_CODES } from "../common/constants";
+import { firebaseClient } from "../common/services/firebase.service";
 
 // AuthController is an abstract class that extends BaseController.
 // It contains a hook that validates Firebase authentication tokens for incoming requests.
@@ -32,9 +33,9 @@ export abstract class AuthController extends BaseController {
 
       // Validate the Firebase token using the firebaseClient service.
       // The decoded token is attached to the request object for future use.
-      // request.decodedToken =
-        // await firebaseClient.getDecodedFirebaseToken(token);
-
+      request.decodedToken =
+        await firebaseClient.getDecodedFirebaseToken(token);
+      request.userId = request.decodedToken?.uid;
       // Log the decoded token for debugging purposes.
       this.logger.info(
         "AuthController: validateAuth: Decoded Token: ",
