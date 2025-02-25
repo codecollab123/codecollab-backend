@@ -12,45 +12,56 @@ export namespace SocketClient {
       },
     });
 
-    const userSocketMap: Record<string, { userName: string; roomId: string }> = {};
+    const userSocketMap = {};
 
     function getAllConnectedClients(room_id: string) {
-      return Array.from(io.sockets.adapter.rooms.get(room_id) || []).map((socketId) => ({
-        socketId,
-        userName: userSocketMap[socketId]?.userName || "Unknown",
-      }));
+      return Array.from(io.sockets.adapter.rooms.get(room_id) || []).map(
+        (socketId) => {
+          return {
+            userName: userSocketMap[socketId],
+            socketId,
+          };
+        }
+      );
     }
 
     io.on("connection", (socket) => {
       logger.info(`User connected: ${socket.id}`);
 
       socket.on("join", ({ room_id, userName }) => {
-        // Check if user already has a socket connected
-        const existingSocketId = Object.keys(userSocketMap).find(
-          (id) => userSocketMap[id]?.userName === userName
-        );
-      
-        if (existingSocketId) {
-          io.to(existingSocketId).emit("forced_disconnect"); // Disconnect old socket
-          io.sockets.sockets.get(existingSocketId)?.disconnect();
-          delete userSocketMap[existingSocketId];
-        }
-      
-        // Store new socket
-        userSocketMap[socket.id] = { userName, roomId: room_id };
+        userSocketMap[socket.id] = userName;
         socket.join(room_id);
-        io.to(room_id).emit("user_joined", { users: getAllConnectedClients(room_id) });
+
+        const clients = getAllConnectedClients(room_id);
+        clients.forEach(({ socketId }) => {
+          io.to(socketId).emit("user_joined", {
+            clients,
+            userName,
+            socketId: socket.id,
+          });
+        });
       });
-      
 
-      socket.on("disconnect", () => {
-        const { roomId } = userSocketMap[socket.id] || {};
+      socket.on("code_sync", ({ socketId, code }) => {
+        logger.info(`socketId: ${socketId}, code: ${code}`);
+        io.to(socketId).emit("code_change", { newCode: code });
+      });
+
+      socket.on("code_change", ({ roomId, newCode }) => {
+        socket.in(roomId).emit("code_change", { newCode });
+      });
+
+      socket.on("disconnecting", () => {
+        const rooms = [...socket.rooms];
+
+        rooms.forEach((roomId) => {
+          socket.in(roomId).emit("disconnected", {
+            socketId: socket.id,
+            userName: userSocketMap[socket.id],
+          });
+        });
         delete userSocketMap[socket.id];
-
-        if (roomId) {
-          io.to(roomId).emit("user_joined", { users: getAllConnectedClients(roomId) });
-        }
-
+        socket.leave;
         logger.info(`User disconnected: ${socket.id}`);
       });
     });
