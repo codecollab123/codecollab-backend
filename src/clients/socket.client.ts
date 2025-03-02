@@ -12,7 +12,8 @@ export namespace SocketClient {
       },
     });
 
-    const userSocketMap = {};
+    const userSocketMap: Record<string, string> = {};
+    const roomMessages: Record<string, any[]> = {}; // Store messages while users are in the room
 
     function getAllConnectedClients(room_id: string) {
       return Array.from(io.sockets.adapter.rooms.get(room_id) || []).map(
@@ -32,6 +33,14 @@ export namespace SocketClient {
         userSocketMap[socket.id] = userName;
         socket.join(room_id);
 
+          // Send previous messages when the user opens the chat
+          if (roomMessages[room_id]) {
+            socket.emit("load_old_messages", roomMessages[room_id]);
+          } else {
+            roomMessages[room_id] = []; // Initialize if not existing
+          }
+  
+
         const clients = getAllConnectedClients(room_id);
         clients.forEach(({ socketId }) => {
           io.to(socketId).emit("user_joined", {
@@ -40,6 +49,16 @@ export namespace SocketClient {
             socketId: socket.id,
           });
         });
+      });
+  // Handle incoming chat messages and store them in memory
+      socket.on("send_message", ({ room_id, message }) => {
+        if (!roomMessages[room_id]) {
+          roomMessages[room_id] = [];
+        }
+
+        roomMessages[room_id].push(message); // Store messages temporarily
+
+        io.to(room_id).emit("receive_message", message);
       });
 
       socket.on("code_sync", ({ socketId, code }) => {
@@ -62,6 +81,13 @@ export namespace SocketClient {
         });
         delete userSocketMap[socket.id];
         socket.leave;
+           // Check if the room is empty, then delete messages
+           setTimeout((roomId) => {
+            if (io.sockets.adapter.rooms.get(roomId)?.size === 0) {
+              delete roomMessages[roomId];
+              logger.info(`Room ${roomId} is empty. Messages cleared.`);
+            }
+          }, 5000); // Delay clearing messages to handle quick re-joins
         logger.info(`User disconnected: ${socket.id}`);
       });
     });
