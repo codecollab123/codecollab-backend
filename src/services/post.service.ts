@@ -1,0 +1,74 @@
+import { Service, Inject } from "fastify-decorators";
+import { BaseService } from "../common/base.service";
+import { PostDAO } from "../dao/post";
+
+@Service()
+export class PostService extends BaseService {
+  @Inject(PostDAO)
+  private postDAO!: PostDAO;
+
+  async create(body: any) {
+    try {
+      this.logger.info(`PostService: create -> Creating Post`);
+      return await this.postDAO.createPost(body);
+    } catch (error: any) {
+      this.logger.error(`Error in create Post: ${error.message}`);
+    }
+  }
+
+  async getAll() {
+    return await this.postDAO.getAllPosts();
+  }
+
+  async getUserPosts(userId: string) {
+    if (!userId) throw new Error("User ID is required");
+    return await this.postDAO.getUserPosts(userId);
+  }
+  
+  async like(postId: string, userId: string) {
+    if (!userId) throw new Error("User ID is required");
+    return await this.postDAO.likePost(postId, userId);
+  }
+  
+  async dislike(postId: string, userId: string) {
+    if (!userId) throw new Error("User ID is required");
+    return await this.postDAO.dislikePost(postId, userId);
+  }
+  
+  async createComment(postId: string, commentData: any, userId: string) {
+    if (!userId) throw new Error("User ID is required");
+    return await this.postDAO.createComment(postId, { ...commentData, userId });
+  }
+  
+  async getComments(postId: string) {
+    if (!postId) throw new Error("Post ID is required");
+    return await this.postDAO.getComments(postId);
+  }
+  
+  async update(postId: string, updateData: any, userId: string) {
+    if (!postId) throw new Error("Post ID is required");
+    if (!userId) throw new Error("User ID is required");
+  
+    // Fetch the existing post
+    const existingPost = await this.postDAO.getPostById(postId);
+    if (!existingPost) {
+      throw new Error("Post not found");
+    }
+  
+    // Ensure only the author can update the post
+    if (existingPost['userId'] !== userId) {
+      throw new Error("Unauthorized: You can only update your own posts");
+    }
+  
+    // Call the DAO method to update the post
+    return await this.postDAO.updatePost(postId, updateData);
+  }
+
+  async delete(postId: string, userId: string) {
+    return await this.postDAO.deletePost(postId, userId);
+  }
+
+  async bookmark(postId: string, userId: string) {
+    return await this.postDAO.bookmarkPost(postId, userId);
+  }
+}

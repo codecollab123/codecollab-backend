@@ -23,6 +23,7 @@ export const RESPONSE_MESSAGE = {
   REQUEST_DATA_INVALID: "Invalid data in the request body", // Validation error for request data
   DATA_NOT_FOUND: "Data not found", // General data not found message
   BAD_TOKEN: "Invalid token", // Token validation failed
+  DELETED: "Deleted successfully" ,
   INVALID_EMAIL_OR_PASSWORD: "Email or password is invalid", // Invalid login credentials
   UNAUTHORISED: "UNAUTHORISED", // Unauthorized access message
   DATABASE_REQUEST_ERROR: "Database request error", // Error occurred during database request
@@ -38,18 +39,8 @@ export const RESPONSE_MESSAGE = {
   FREELANCER_PROJECT_NOT_FOUND: "Freelancer project not found by id", // Freelancer project not found
   PROJECT_NOT_FOUND: "Project by provided ID was not found.", // Project not found by ID
   DRAFT_SUB_NOT_FOUND: "No subscription found for this draft owner", // No draft subscription found
-  FREELANCER_NOT_FOUND: "Freelancer with provided ID could not be found.", // Freelancer not found
-  BUSINESS_NOT_FOUND: "Business with provided ID could not be found.", // Business entity not found
-  CONSULTANT_NOT_FOUND: "Consultant with provided ID could not be found", // Consultant not found
-  EXPERIENCE_NOT_FOUND: "Freelancer experience not found by id", // Experience not found by ID
-  EDUCATION_NOT_FOUND: "Freelancer education not found by id", // Education not found by ID
   PROJECT_NOT_FOUND_EMAIL: "Project not found by email.", // Project not found by email
   PROJECT_NOT_FOUND_BY_ID: "Project not found by id", // Project not found by ID
-  BID_NOT_FOUND: "Bid not found by id", // Bid not found by ID
-
-  INTERVIEW_NOT_FOUND: "Interview not found by id", // Interview not found by ID
-  HIRE_DEHIX_TALENT_NOT_FOUND: "Hire Dehix Talent not found by id", // Hire talent not found by ID
-  DEHIX_TALENT_NOT_FOUND: "Dehix Talent not found", // Dehix Talent not found
   DRAFT_NOT_FOUND: "Draft with provided ID could not be found.", // Draft not found
   DRAFT_IS_INCOMPLETE:
     "This draft is incomplete and cannot be submitted for review", // Incomplete draft error

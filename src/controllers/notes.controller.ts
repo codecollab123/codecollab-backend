@@ -48,7 +48,6 @@ export default class NotesController extends AuthController {
   ) {
     try {
       this.logger.info(`NotesController -> createNotes -> Creating a new note`);
-
       const body: any = request.body;
       const note = await this.NotesService.createNotes(body);
       reply.status(STATUS_CODES.SUCCESS).send({ note });
