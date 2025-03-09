@@ -9,7 +9,7 @@ import { commonErrorResponses } from "../commonErrorCodes";
 
 export const createNotesSchema: FastifySchema = {
   description: "API for creating notes",
-  summary: "API to Create notes",
+  summary: " notes",
   tags: ["Notes"],
   body: {
     type: "object",
