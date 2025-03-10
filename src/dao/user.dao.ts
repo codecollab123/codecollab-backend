@@ -12,6 +12,22 @@ export class UserDAO extends BaseDAO {
     this.model = UserModel;
   }
 
+  async getUserByEmail(email: string) {
+    return this.model.findOne({ email });
+  }
+
+  async findUserById(id: string) {
+    return this.model.findById(id);
+  };
+
+  async getUserByUserName(userName: string) {
+    try {
+      return await this.model.find({ userName });
+    } catch (error: any) {
+      throw new Error(`Failed to fetch freelancer data: ${error.message}`);
+    }
+  }
+
   async createUser(userData: createUser) {
     try {
       const createdUser = await this.model.create(userData);

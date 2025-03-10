@@ -28,8 +28,8 @@ export class UserService extends BaseService {
       // Create Firebase user
       const user_id =
         await firebaseClient.createFireBaseUserWithCustomClaims(
-          userData.email,
-          userData.password,
+          userData.email || "",
+          userData.password || "",
           { type: "user" },
           userData.phone,
         );
@@ -66,5 +66,28 @@ export class UserService extends BaseService {
         throw error; // Pass the error to the parent for proper handling
       }
     }
-  }
+  };
+
+  async createUserProfilebyGoogleLogin(userData: createUser) {
+    try {
+      this.logger.info(
+        "UserService: createUserProfilebyGoogleLogin: Creating User: ",
+        userData,
+      );
+
+      const data: any = await this.UserDAO.createUser(userData);
+
+      return data;
+    } catch (error: any) {
+      if (error.code === "USER_ALREADY_EXISTS") {
+        throw new ConflictError(
+          RESPONSE_MESSAGE.USER_EXISTS,
+          ERROR_CODES.USER_ALREADY_EXIST,
+        );
+      } else {
+        this.logger.error("Error in createUser:", error);
+        throw error; // Pass the error to the parent for proper handling
+      }
+    }
+  };
 }

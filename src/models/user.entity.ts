@@ -8,7 +8,7 @@ export interface IUser extends Document {
   userName: string;
   email: string;
   password: string;
-  phone: string;
+  phone?: string;
   dob?: Date;
   profilePic?: string;
 };
@@ -44,7 +44,7 @@ const userSchema: Schema = new Schema(
     },
     phone: {
       type: String,
-      required: true,
+      required: false,
     },
     dob: {
       type: String,

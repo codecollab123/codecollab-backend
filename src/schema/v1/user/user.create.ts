@@ -20,7 +20,6 @@ export const createUserSchema: FastifySchema = {
       "lastName",
       "userName",
       "email",
-      "phone",
     ],
   },
   response: {
