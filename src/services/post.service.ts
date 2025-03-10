@@ -1,6 +1,6 @@
 import { Service, Inject } from "fastify-decorators";
 import { BaseService } from "../common/base.service";
-import { PostDAO } from "../dao/post";
+import { PostDAO } from "../dao/post.dao";
 
 @Service()
 export class PostService extends BaseService {
