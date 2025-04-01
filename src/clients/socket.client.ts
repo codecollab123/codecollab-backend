@@ -16,6 +16,8 @@ export namespace SocketClient {
     const roomMessages: Record<string, any[]> = {};
     // Track users with audio capabilities
     const audioCapableUsers: Record<string, string[]> = {};
+    const roomDrawings: Record<string, any[]> = {}; // Store drawings per room
+
 
     function getAllConnectedClients(room_id: string) {
       return Array.from(io.sockets.adapter.rooms.get(room_id) || []).map(
@@ -46,10 +48,16 @@ export namespace SocketClient {
         }
 
         // Send previous messages when the user opens the chat
-        if (roomMessages[room_id]) {
-          socket.emit("load_old_messages", roomMessages[room_id]);
-        } else {
+        if (roomMessages[room_id]){
+          socket.emit("load_old_messages", roomMessages[room_id],)        } 
+          else {
           roomMessages[room_id] = []; // Initialize if not existing
+        }
+
+        if (roomDrawings[room_id]){
+          socket.emit("load_whiteboard", roomDrawings[room_id],)        } 
+          else {
+            roomDrawings[room_id] = []; // Initialize if not existing
         }
 
         const clients = getAllConnectedClients(room_id);
@@ -63,6 +71,28 @@ export namespace SocketClient {
             hasAudio: hasAudio,
           });
         });
+
+// Handle whiteboard drawing events
+socket.on("draw", ({ room_id, drawData }) => {
+  if (!roomDrawings[room_id]) {
+    roomDrawings[room_id] = [];
+  }
+  roomDrawings[room_id].push(drawData); // Store drawing
+  socket.to(room_id).emit("draw", drawData); // Send to all except sender
+});
+
+// Clear whiteboard
+socket.on("clear_whiteboard", (room_id) => {
+  if (roomDrawings[room_id]) {
+    roomDrawings[room_id] = []; // Clear stored drawings
+  }
+  io.to(room_id).emit("clear_whiteboard"); // Notify all users
+});
+
+// Load whiteboard when user joins
+if (!roomDrawings[room_id]) roomDrawings[room_id] = []; 
+socket.emit("load_whiteboard", roomDrawings[room_id]);
+
 
         // Send the new user the list of audio capable users
         if (audioCapableUsers[room_id].length > 0) {
@@ -105,6 +135,7 @@ export namespace SocketClient {
         roomMessages[room_id].push(message);
         socket.to(room_id).emit("receive_message", message);
       });
+
 
       socket.on("code_sync", ({ socketId, code }) => {
         logger.info(`socketId: ${socketId}, code: ${code}`);
