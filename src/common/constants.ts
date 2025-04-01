@@ -56,6 +56,7 @@ export const RESPONSE_MESSAGE = {
   INVALID_TAX_ID: "Invalid tax id", // Invalid tax ID
   NOT_VENUE_TYPE: "NOT_VENUE_TYPE", // Invalid venue type
   NOT_HOTEL_TYPE: "NOT_HOTEL_TYPE", // Invalid hotel type
+  
 };
 
 // Email configuration for reset password
