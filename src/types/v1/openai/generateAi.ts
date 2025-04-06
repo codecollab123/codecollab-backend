@@ -1,3 +1,4 @@
 export interface GenerateChatBody {
-  message: string; // Accepting any message instead of jobTitle
+  message: string; // User input message to the chatbot
+  history?: { role: string; parts: { text: string }[] }[]; // Optional conversation history for context
 }

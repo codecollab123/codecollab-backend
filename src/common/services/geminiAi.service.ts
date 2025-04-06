@@ -11,24 +11,35 @@ if (!API_KEY) {
 }
 
 export class GeminiAiService {
-  async chatWithGemini(message: string): Promise<{ reply: string; tokensUsed: number }> {
+  async chatWithGemini(
+    message: string, 
+    history: { role: string; parts: { text: string }[] }[] = []
+  ): Promise<{ data: { reply: string; tokensUsed: number } }> {
     try {
       const prompt = `You are an AI coding assistant inside a collaborative coding room where multiple developers work together. Your job is to help coders with debugging, code explanations, best practices, and syntax issues while keeping responses concise (4 lines max). If a coder is stuck, provide step-by-step guidance. If the question lacks context, ask for more details before responding.`;
-      
+
       const response = await axios.post(
         `${GEMINI_API_URL}?key=${API_KEY}`,
         {
-          contents: [{ role: "user", parts: [{ text: `${prompt}\nUser: ${message}` }] }]
+          contents: [
+            { role: "user", parts: [{ text: message }] }, // User message
+            ...history, // History
+          ],
         }
       );
-      
+
       const reply = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || "I'm not sure how to respond to that.";
       const tokensUsed = response.data?.usageMetadata?.totalTokenCount || 0;
-      
-      return { reply, tokensUsed };
-    } catch (error) {
-      console.error("Error communicating with Gemini AI:", error);
+
+      return { data: { reply, tokensUsed } };
+    }catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        console.error("Axios Error:", error.response?.data || error.message);
+      } else {
+        console.error("Unexpected Error:", error);
+      }
       throw new Error("Failed to get a response from Gemini AI");
     }
+    
   }
 }

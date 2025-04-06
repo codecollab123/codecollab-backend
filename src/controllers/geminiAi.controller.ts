@@ -20,16 +20,14 @@ export default class GeminiController extends AuthController {
       this.logger.info("Chat request received...");
       console.log("User Message:", request.body.message);
 
-      // Call the Gemini AI service to get a response
-      const { reply: aiReply, tokensUsed } = await this.geminiAiService.chatWithGemini(request.body.message);
+      // Extract message and history from request body
+      const { message, history = [] } = request.body;
+
+      // Call the Gemini AI service with message and history
+      const response = await this.geminiAiService.chatWithGemini(message, history);
 
       // Send response to client
-      reply.status(STATUS_CODES.SUCCESS).send({
-        data: {
-          reply: aiReply,
-          tokensUsed,
-        },
-      });
+      reply.status(STATUS_CODES.SUCCESS).send(response);
 
     } catch (error: any) {
       this.logger.error(`Error in chatbot response: ${error.message}`);
