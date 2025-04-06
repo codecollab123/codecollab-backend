@@ -9,6 +9,22 @@ export const chatWithGeminiSchema: FastifySchema = {
     type: "object",
     properties: {
       message: { type: "string", description: "User input message to the chatbot" },
+      history: {
+        type: "array",
+        description: "Conversation history for context",
+        items: {
+          type: "object",
+          properties: {
+            role: { type: "string", description: "Role of the participant (user or assistant)" },
+            parts: {
+              type: "array",
+              items: { type: "object", properties: { text: { type: "string" } }, required: ["text"] },
+              description: "Message parts exchanged in the conversation"
+            }
+          },
+          required: ["role", "parts"]
+        }
+      }
     },
     required: ["message"],
   },
