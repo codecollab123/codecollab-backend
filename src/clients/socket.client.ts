@@ -12,7 +12,7 @@ export namespace SocketClient {
       },
     });
 
-    const userSocketMap: Record<string, string> = {};
+    const userSocketMap: Record<string, string> = {};   //socket id store krta h  userId-->socketid
     const roomMessages: Record<string, any[]> = {};
     // Track users with audio capabilities
     const audioCapableUsers: Record<string, string[]> = {};

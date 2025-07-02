@@ -63,10 +63,51 @@ export class UserService extends BaseService {
         );
       } else {
         this.logger.error("Error in createUser:", error);
-        throw error; // Pass the error to the parent for proper handling
+        throw error; 
       }
     }
   };
+
+async updateUserProfile(userId: string, updates: Partial<IUser>) {
+  try {
+    this.logger.info(`UserService: Updating user with ID: ${userId}`);
+    const updatedUser = await this.UserDAO.updateUser(userId, updates);
+
+    if (!updatedUser) {
+      throw new NotFoundError(
+        RESPONSE_MESSAGE.USER_NOT_FOUND,
+        ERROR_CODES.NOT_FOUND
+      );
+    }
+
+    return updatedUser;
+  } catch (error) {
+    this.logger.error("Error in updateUserProfile:", error);
+    throw error;
+  }
+}
+
+ async getUserProfile(user_id: string) {
+    this.logger.info(
+      "UserService: getUserProfile: Fetching USER profile for ID: ",
+      user_id,
+    );
+
+    const user: any =
+      await this.UserDAO.findUserById(user_id);
+
+    if (!user) {
+      this.logger.error(
+        "UserService: getUserProfile: user not found with ID: ",
+        user_id,
+      );
+      throw new NotFoundError(
+        RESPONSE_MESSAGE.USER_NOT_FOUND,
+        ERROR_CODES.USER_NOT_FOUND,
+      );
+    }
+    return user;
+  }
 
   async createUserProfilebyGoogleLogin(userData: createUser) {
     try {

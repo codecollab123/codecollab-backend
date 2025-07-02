@@ -10,7 +10,8 @@ import { POST_BASE_ENDPOINT,
   GET_COMMENTS_BY_ID, 
   DELETE_POST_BY_ID, 
   BOOKMARK_POST_BY_ID,
-  UPDATE_POST_BY_ID
+  UPDATE_POST_BY_ID,
+  GET_CONTRIBUTION_COUNT_BY_ID
  } from "../constants/post.constant";
 import { AuthController } from "../common/auth.controller";
 import { PostService } from "../services/post.service";
@@ -19,7 +20,7 @@ import { ERROR_CODES, RESPONSE_MESSAGE, STATUS_CODES } from "../common/constants
 
 import { createCommentsSchema, createPostSchema } from "../schema/v1/post/post.create";
 import { deletePostSchema } from "../schema/v1/post/post.delete";
-import { getBookmarksSchema, getCommentsSchema, getDislikesSchema, getLikesSchema, getPostByIdSchema, getPostsSchema } from "../schema/v1/post/post.get";
+import { getBookmarksSchema, getCommentsSchema, getContributionCountSchema, getDislikesSchema, getLikesSchema, getPostByIdSchema, getPostsSchema } from "../schema/v1/post/post.get";
 import { updatePostSchema } from "../schema/v1/post/post.update";
 
 @Controller({ route: POST_BASE_ENDPOINT })
@@ -67,6 +68,22 @@ async getUserPosts(request: FastifyRequest, reply: FastifyReply) {
   }
 }
 
+@GET(GET_CONTRIBUTION_COUNT_BY_ID,{schema:getContributionCountSchema})
+async getContributionCount(
+  request: FastifyRequest<{ Params: { user_id: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const count = await this.postService.getContributionCount(request.params.user_id);
+    reply.status(STATUS_CODES.SUCCESS).send({ data: { contributionCount: count } });
+  } catch (error: any) {
+    this.logger.error(`Error in getContributionCount: ${error.message}`);
+    reply.status(STATUS_CODES.SERVER_ERROR).send({
+      message: RESPONSE_MESSAGE.SERVER_ERROR,
+      code: ERROR_CODES.SERVER_ERROR,
+    });
+  }
+}
 
   @GET(LIKE_POST_BY_ID,{schema:getLikesSchema})
   async likePost(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
