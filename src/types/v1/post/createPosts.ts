@@ -1,11 +1,14 @@
-export interface createPost {
-    _id: string;
-    caption?: string;
-    image: string;
-    author: string;
-    likes?: string[]; 
-    comments?: string[];
-    createdAt?: Date;
-    updatedAt?: Date;
-  }
-  
+export interface CreatePost {
+  _id: string;
+  title: string;
+  content: string;
+  postType?: "question" | "solution" | "challenge";
+  difficultyLevel?: "easy" | "medium" | "hard";
+  tags?: string[];
+  image?: string;
+  author: string;
+  likes?: string[];
+  comments?: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
+}

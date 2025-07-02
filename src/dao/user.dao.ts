@@ -28,6 +28,10 @@ export class UserDAO extends BaseDAO {
     }
   }
 
+  async updateUser(userId: string, updates: Partial<IUser>) {
+  return this.model.findByIdAndUpdate(userId, updates, { new: true });
+}
+
   async createUser(userData: createUser) {
     try {
       const createdUser = await this.model.create(userData);

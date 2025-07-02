@@ -29,6 +29,16 @@ export class PostDAO extends BaseDAO {
     }
   }
 
+
+  async getContributionCountByUser(userId: string): Promise<number> {
+  try {
+    return await this.model.countDocuments({ author: userId });
+  } catch (error: any) {
+    throw new Error(`Failed to get contribution count: ${error.message}`);
+  }
+}
+
+ 
   async getAllPosts() {
     try {
       return await this.model.find();

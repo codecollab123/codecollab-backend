@@ -1,6 +1,5 @@
 import { FastifySchema } from "fastify";
 import { commonErrorResponses } from "../commonErrorCodes";
-
 export const getPostsSchema: FastifySchema = {
   description: "API for retrieving posts",
   summary: "API to Get All Posts",
@@ -8,11 +7,11 @@ export const getPostsSchema: FastifySchema = {
   querystring: {
     type: "object",
     properties: {
-      userId: { type: "string", description: "Enter your userId to filter posts" },
+      userId: { type: "string", description: "Filter posts by author userId" },
       page: { type: "integer", minimum: 1, description: "Page number for pagination" },
       limit: { type: "integer", minimum: 1, description: "Number of posts per page" },
     },
-    required: ["userId"],
+    
     additionalProperties: false,
   },
   response: {
@@ -26,11 +25,24 @@ export const getPostsSchema: FastifySchema = {
             type: "object",
             properties: {
               _id: { type: "string" },
-              caption: { type: "string" },
+              title: { type: "string" },
+              content: { type: "string" },
+              postType: { type: "string" },
+              difficultyLevel: { type: "string" },
+              tags: {
+                type: "array",
+                items: { type: "string" }
+              },
               image: { type: "string" },
               author: { type: "string" },
-              likes: { type: "array", items: { type: "string" } },
-              comments: { type: "array", items: { type: "string" } },
+              likes: {
+                type: "array",
+                items: { type: "string" }
+              },
+              comments: {
+                type: "array",
+                items: { type: "string" }
+              },
             },
           },
         },
@@ -60,11 +72,24 @@ export const getPostByIdSchema: FastifySchema = {
           type: "object",
           properties: {
             _id: { type: "string" },
-            caption: { type: "string" },
+            title: { type: "string" },
+            content: { type: "string" },
+            postType: { type: "string" },
+            difficultyLevel: { type: "string" },
+            tags: {
+              type: "array",
+              items: { type: "string" }
+            },
             image: { type: "string" },
             author: { type: "string" },
-            likes: { type: "array", items: { type: "string" } },
-            comments: { type: "array", items: { type: "string" } },
+            likes: {
+              type: "array",
+              items: { type: "string" }
+            },
+            comments: {
+              type: "array",
+              items: { type: "string" }
+            },
           },
         },
       },
@@ -72,6 +97,34 @@ export const getPostByIdSchema: FastifySchema = {
     ...commonErrorResponses,
   },
 };
+export const getContributionCountSchema: FastifySchema = {
+  description: "API to get contribution count by user ID",
+  summary: "Get contribution count",
+  tags: ["Post"],
+  params: {
+    type: "object",
+    properties: {
+      user_id: { type: "string", description: "User ID whose contribution count to fetch" },
+    },
+    required: ["user_id"],
+  },
+  response: {
+    200: {
+      description: "Success",
+      type: "object",
+      properties: {
+        data: {
+          type: "object",
+          properties: {
+            contributionCount: { type: "number" },
+          },
+        },
+      },
+    },
+    ...commonErrorResponses,
+  },
+};
+
 
 export const getCommentsSchema: FastifySchema = {
   description: "API to get comments for a post",
@@ -82,7 +135,6 @@ export const getCommentsSchema: FastifySchema = {
     properties: {
       id: { type: "string", description: "Post ID to get comments" },
     },
-    required: ["id"],
   },
   response: {
     200: {

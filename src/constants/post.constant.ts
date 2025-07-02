@@ -9,6 +9,9 @@ export const GET_ALL_POSTS_ENDPOINT = "/all";
 //endpoint to get the post by id of a particular user
 export const GET_USER_POSTS_BY_ID = "/:user_id/userpost";
 
+// endpoint to get contribution count of a user
+export const GET_CONTRIBUTION_COUNT_BY_ID = "/:user_id/contributions";
+
 //endpoint to get the like post by an id
 export const LIKE_POST_BY_ID = "/:user_id/like";
 

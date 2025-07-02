@@ -7,14 +7,16 @@ export class PostService extends BaseService {
   @Inject(PostDAO)
   private postDAO!: PostDAO;
 
-  async create(body: any) {
-    try {
-      this.logger.info(`PostService: create -> Creating Post`);
-      return await this.postDAO.createPost(body);
-    } catch (error: any) {
-      this.logger.error(`Error in create Post: ${error.message}`);
-    }
+ async create(body: any) {
+  try {
+    this.logger.info(`PostService: create -> Creating Post`);
+    return await this.postDAO.createPost(body);
+  } catch (error: any) {
+    this.logger.error(`Error in create Post: ${error.message}`);
+    throw error; // ✅ THIS IS MANDATORY
   }
+}
+
 
   async getAll() {
     return await this.postDAO.getAllPosts();
@@ -24,6 +26,12 @@ export class PostService extends BaseService {
     if (!userId) throw new Error("User ID is required");
     return await this.postDAO.getUserPosts(userId);
   }
+
+  async getContributionCount(userId: string): Promise<number> {
+  if (!userId) throw new Error("User ID is required");
+  return await this.postDAO.getContributionCountByUser(userId);
+}
+
   
   async like(postId: string, userId: string) {
     if (!userId) throw new Error("User ID is required");
