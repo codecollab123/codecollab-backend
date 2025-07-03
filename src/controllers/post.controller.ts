@@ -54,19 +54,25 @@ export default class PostController extends AuthController {
     }
   }
 
- @GET(GET_USER_POSTS_BY_ID,{schema:getPostByIdSchema})
+ @GET(GET_USER_POSTS_BY_ID, { schema: getPostByIdSchema })
 async getUserPosts(request: FastifyRequest, reply: FastifyReply) {
-  if (!request.userId || !request.userId) {
-    return reply.status(STATUS_CODES.UNAUTHORISED).send({ message: "Unauthorized" });
+  const { id } = request.params as { id: string };
+
+  if (!id) {
+    return reply.status(STATUS_CODES.BAD_REQUEST).send({ message: "User ID param missing" });
   }
+
   try {
-    const data = await this.postService.getUserPosts(request.userId);
-    reply.status(STATUS_CODES.SUCCESS).send({ data });
+    console.log("User ID:", id);
+    const data = await this.postService.getUserPosts(id); // <-- pass the param `id` here
+    console.log("User posts:", data);
+    return reply.status(STATUS_CODES.SUCCESS).send({ data });
   } catch (error: any) {
     this.logger.error(`Error in getUserPosts: ${error.message}`);
     reply.status(STATUS_CODES.SERVER_ERROR).send({ message: RESPONSE_MESSAGE.SERVER_ERROR });
   }
 }
+
 
 @GET(GET_CONTRIBUTION_COUNT_BY_ID,{schema:getContributionCountSchema})
 async getContributionCount(

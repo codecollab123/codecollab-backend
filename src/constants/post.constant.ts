@@ -7,7 +7,7 @@ export const CREATE_POST_ENDPOINT = "/:user_id";
 export const GET_ALL_POSTS_ENDPOINT = "/all";
 
 //endpoint to get the post by id of a particular user
-export const GET_USER_POSTS_BY_ID = "/:user_id/userpost";
+export const GET_USER_POSTS_BY_ID = "/:id/userpost";
 
 // endpoint to get contribution count of a user
 export const GET_CONTRIBUTION_COUNT_BY_ID = "/:user_id/contributions";

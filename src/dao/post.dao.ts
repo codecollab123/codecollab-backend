@@ -47,13 +47,11 @@ export class PostDAO extends BaseDAO {
     }
   }
 
-  async getUserPosts(userId: string) {
-    try {
-      return await this.model.find({ userId });
-    } catch (error: any) {
-      throw new Error(`Failed to fetch user posts: ${error.message}`);
-    }
-  }
+async getUserPosts(userId: string) {
+  return await this.model.find({ author: userId });
+}
+
+
 
   async likePost(postId: string, userId: string) {
     try {

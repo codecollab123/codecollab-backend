@@ -69,29 +69,33 @@ export const getPostByIdSchema: FastifySchema = {
       type: "object",
       properties: {
         data: {
-          type: "object",
-          properties: {
-            _id: { type: "string" },
-            title: { type: "string" },
-            content: { type: "string" },
-            postType: { type: "string" },
-            difficultyLevel: { type: "string" },
-            tags: {
-              type: "array",
-              items: { type: "string" }
-            },
-            image: { type: "string" },
-            author: { type: "string" },
-            likes: {
-              type: "array",
-              items: { type: "string" }
-            },
-            comments: {
-              type: "array",
-              items: { type: "string" }
-            },
-          },
-        },
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      _id: { type: "string" },
+      title: { type: "string" },
+      content: { type: "string" },
+      postType: { type: "string" },
+      difficultyLevel: { type: "string" },
+      tags: {
+        type: "array",
+        items: { type: "string" }
+      },
+      image: { type: "string" },
+      author: { type: "string" },
+      likes: {
+        type: "array",
+        items: { type: "string" }
+      },
+      comments: {
+        type: "array",
+        items: { type: "string" }
+      }
+    }
+  }
+}
+
       },
     },
     ...commonErrorResponses,
