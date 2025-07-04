@@ -135,16 +135,27 @@ async getContributionCount(
     }
   }
 
-  @DELETE(DELETE_POST_BY_ID,{schema:deletePostSchema})
-  async deletePost(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
-    try {
-      await this.postService.delete(request.params.id, request.userId);
-      reply.status(STATUS_CODES.SUCCESS).send({ message: RESPONSE_MESSAGE.DELETED });
-    } catch (error: any) {
-      this.logger.error(`Error in deletePost: ${error.message}`);
-      reply.status(STATUS_CODES.SERVER_ERROR).send({ message: RESPONSE_MESSAGE.SERVER_ERROR });
-    }
+@DELETE(DELETE_POST_BY_ID, { schema: deletePostSchema })
+async deletePost(request: FastifyRequest<{ Params: { postId: string } }>, reply: FastifyReply) {
+  try {
+    const { postId } = request.params;
+    const userId = request.userId;
+      console.log("Deleting postId:", postId);
+    console.log("With userId:", userId);
+
+    const result = await this.postService.delete(postId, userId);
+      console.log("Mongo Delete Result:", result); // <- see this
+    reply.status(200).send({
+      message: "Post deleted successfully",
+      postId,
+    });
+  } catch (error: any) {
+    this.logger.error(`Error in deletePost: ${error.message}`);
+    reply.status(500).send({ message: "Internal Server Error" });
   }
+}
+
+
   @PUT(UPDATE_POST_BY_ID, { schema: updatePostSchema })
   async updatePost(
     request: FastifyRequest<{ Params: { id: string }; Body: any }>,

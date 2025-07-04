@@ -25,7 +25,7 @@ export const CREATE_COMMENTS_BY_ID = "/:user_id/comment";
 export const GET_COMMENTS_BY_ID = "/:user_id/comments";
 
 //endpoint to delete post by an id
-export const DELETE_POST_BY_ID = "/:user_id";
+export const DELETE_POST_BY_ID = "/:postId";
 
 //endpoint to get the bookmark/save post by an id
 export const BOOKMARK_POST_BY_ID = "/:user_id/bookmark";

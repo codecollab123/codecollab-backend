@@ -29,16 +29,14 @@ export class PostDAO extends BaseDAO {
     }
   }
 
-
   async getContributionCountByUser(userId: string): Promise<number> {
-  try {
-    return await this.model.countDocuments({ author: userId });
-  } catch (error: any) {
-    throw new Error(`Failed to get contribution count: ${error.message}`);
+    try {
+      return await this.model.countDocuments({ author: userId });
+    } catch (error: any) {
+      throw new Error(`Failed to get contribution count: ${error.message}`);
+    }
   }
-}
 
- 
   async getAllPosts() {
     try {
       return await this.model.find();
@@ -47,11 +45,9 @@ export class PostDAO extends BaseDAO {
     }
   }
 
-async getUserPosts(userId: string) {
-  return await this.model.find({ author: userId });
-}
-
-
+  async getUserPosts(userId: string) {
+    return await this.model.find({ author: userId });
+  }
 
   async likePost(postId: string, userId: string) {
     try {
@@ -100,15 +96,30 @@ async getUserPosts(userId: string) {
 
   async deletePost(postId: string, userId: string) {
     try {
-      return await this.model.findOneAndDelete({ _id: postId, userId });
+      console.log("Deleting post with:", postId, "and authorId:", userId);
+
+      const deletedPost = await this.model.findOneAndDelete({
+        _id: postId,
+        author: userId,
+      });
+      console.log("Deleted Post:", deletedPost);
+      if (!deletedPost) {
+        throw new Error("Post not found or unauthorized");
+      }
+
+      return deletedPost;
     } catch (error: any) {
+      console.error("❌ Delete error:", error);
       throw new Error(`Failed to delete post: ${error.message}`);
     }
   }
+
   async updatePost(postId: string, updateData: any) {
-    return await this.model.findByIdAndUpdate(postId, updateData, { new: true });
+    return await this.model.findByIdAndUpdate(postId, updateData, {
+      new: true,
+    });
   }
-  
+
   async bookmarkPost(postId: string, userId: string) {
     try {
       return await this.model.findByIdAndUpdate(

@@ -8,9 +8,12 @@ export const deletePostSchema: FastifySchema = {
   params: {
     type: "object",
     properties: {
-      postId: { type: "string", description: "Unique identifier of the post to be deleted" },
+      postId: {
+        type: "string",
+        description: "Unique identifier of the post to be deleted",
+      },
     },
-    required: ["postId"], // Ensuring postId is mandatory
+    required: ["postId"],
     additionalProperties: false,
   },
   response: {
