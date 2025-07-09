@@ -6,7 +6,12 @@ export interface CreatePost {
   difficultyLevel?: "easy" | "medium" | "hard";
   tags?: string[];
   image?: string;
-  author: string;
+   author: {
+    id: string;
+    // name: string;
+    avatar: string;
+    level: string;
+  };
   likes?: string[];
   comments?: string[];
   createdAt?: Date;

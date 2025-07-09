@@ -76,11 +76,11 @@ async getUserPosts(request: FastifyRequest, reply: FastifyReply) {
 
 @GET(GET_CONTRIBUTION_COUNT_BY_ID,{schema:getContributionCountSchema})
 async getContributionCount(
-  request: FastifyRequest<{ Params: { user_id: string } }>,
+  request: FastifyRequest<{ Params: { userId: string } }>,
   reply: FastifyReply
 ) {
   try {
-    const count = await this.postService.getContributionCount(request.params.user_id);
+    const count = await this.postService.getContributionCount(request.params.userId);
     reply.status(STATUS_CODES.SUCCESS).send({ data: { contributionCount: count } });
   } catch (error: any) {
     this.logger.error(`Error in getContributionCount: ${error.message}`);

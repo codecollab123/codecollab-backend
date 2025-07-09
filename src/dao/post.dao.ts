@@ -29,13 +29,22 @@ export class PostDAO extends BaseDAO {
     }
   }
 
-  async getContributionCountByUser(userId: string): Promise<number> {
-    try {
-      return await this.model.countDocuments({ author: userId });
-    } catch (error: any) {
+  // async getContributionCountByUser(userId: string): Promise<number> {
+  //   try {
+  //     return await this.model.countDocuments({ author: userId });
+  //   } catch (error: any) {
+  //     throw new Error(`Failed to get contribution count: ${error.message}`);
+  //   }
+  // }
+
+async getContributionCountByUser(userId: string): Promise<number> {
+  try{
+  return await this.model.countDocuments({ "author.id": userId }); // ✅ FIXED
+}catch (error: any) {
       throw new Error(`Failed to get contribution count: ${error.message}`);
     }
   }
+
 
   async getAllPosts() {
     try {
@@ -73,17 +82,27 @@ export class PostDAO extends BaseDAO {
     }
   }
 
-  async createComment(postId: string, commentData: any) {
-    try {
-      return await this.model.findByIdAndUpdate(
-        postId,
-        { $push: { comments: commentData } },
-        { new: true }
-      );
-    } catch (error: any) {
-      throw new Error(`Failed to add comment: ${error.message}`);
-    }
+async createComment(postId: string, commentData: any) {
+  try {
+    return await this.model.findByIdAndUpdate(
+      postId,
+      {
+        $push: {
+          comments: {
+            text: commentData.text,
+            author: commentData.userId, // or whatever you're storing
+            createdAt: new Date(), // 🔥 explicitly set if needed
+          },
+        },
+      },
+      { new: true }
+    );
+  } catch (error: any) {
+    throw new Error(`Failed to add comment: ${error.message}`);
   }
+}
+
+
 
   async getComments(postId: string) {
     try {
