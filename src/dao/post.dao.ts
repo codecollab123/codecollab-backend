@@ -55,7 +55,7 @@ async getContributionCountByUser(userId: string): Promise<number> {
   }
 
   async getUserPosts(userId: string) {
-    return await this.model.find({ author: userId });
+    return await this.model.find({ "author.id": userId });
   }
 
   async likePost(postId: string, userId: string) {
@@ -90,7 +90,7 @@ async createComment(postId: string, commentData: any) {
         $push: {
           comments: {
             text: commentData.text,
-            author: commentData.userId, // or whatever you're storing
+            "author.id": commentData.userId, // or whatever you're storing
             createdAt: new Date(), // 🔥 explicitly set if needed
           },
         },
@@ -119,7 +119,7 @@ async createComment(postId: string, commentData: any) {
 
       const deletedPost = await this.model.findOneAndDelete({
         _id: postId,
-        author: userId,
+       "author.id": userId,
       });
       console.log("Deleted Post:", deletedPost);
       if (!deletedPost) {
