@@ -10,7 +10,7 @@ export const GET_ALL_POSTS_ENDPOINT = "/all";
 export const GET_USER_POSTS_BY_ID = "/:id/userpost";
 
 // endpoint to get contribution count of a user
-export const GET_CONTRIBUTION_COUNT_BY_ID = "/:user_id/contributions";
+export const GET_CONTRIBUTION_COUNT_BY_ID = "/:userId/contributions";
 
 //endpoint to get the like post by an id
 export const LIKE_POST_BY_ID = "/:user_id/like";
@@ -19,10 +19,10 @@ export const LIKE_POST_BY_ID = "/:user_id/like";
 export const DISLIKE_POST_BY_ID = "/:user_id/dislike";
 
 //endpoint to get the like post by an id
-export const CREATE_COMMENTS_BY_ID = "/:user_id/comment";
+export const CREATE_COMMENTS_BY_ID = "/:_id/comment";
 
 //endpoint to get the COMMENTS by an id
-export const GET_COMMENTS_BY_ID = "/:user_id/comments";
+export const GET_COMMENTS_BY_ID = "/:_id/comments";
 
 //endpoint to delete post by an id
 export const DELETE_POST_BY_ID = "/:postId";

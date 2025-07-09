@@ -9,7 +9,12 @@ export interface IPost extends Document {
   difficultyLevel?: "easy" | "medium" | "hard";
   tags?: string[];
   image: string;
-  author: string;
+  author: {
+    id: string;
+    // name: string;
+    avatar?: string;
+    level?: string;
+  };
   likes: string[];
   comments: string[];
   createdAt?: Date;
@@ -47,10 +52,18 @@ const PostSchema: Schema<IPost> = new Schema({
     type: String,
   },
   author: {
-    type: String,
-    ref: "User",
+    type: new Schema(
+      {
+        id: { type: String, required: true },
+        // name: { type: String, required: true },
+        avatar: { type: String },
+        level: { type: String },
+      },
+      { _id: false }
+    ), // 👈 This line disables auto `_id`
     required: true,
   },
+
   likes: [
     {
       type: String,

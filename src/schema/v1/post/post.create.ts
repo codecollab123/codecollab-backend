@@ -74,8 +74,6 @@
 //   },
 // };
 
-
-
 import { FastifySchema } from "fastify";
 import { commonErrorResponses } from "../commonErrorCodes";
 
@@ -92,18 +90,27 @@ export const createPostSchema: FastifySchema = {
       difficultyLevel: { type: "string", enum: ["easy", "medium", "hard"] },
       tags: {
         type: "array",
-        items: { type: "string" }
+        items: { type: "string" },
       },
       image: { type: "string" },
-      author: { type: "string" },
+      author: {
+        type: "object",
+        properties: {
+          id: { type: "string" },
+          // name: { type: "string" },
+          avatar: { type: "string" },
+          level: { type: "string" },
+        },
+        required: ["id"],
+      },
       likes: {
         type: "array",
-        items: { type: "string" }
+        items: { type: "string" },
       },
-     comments: {
-       type: "array",
-         items: { type: "string" },
-     },
+      comments: {
+        type: "array",
+        items: { type: "string" },
+      },
     },
     // Only "title" and "content" are required, rest are optional
     required: ["title", "content"],
@@ -123,17 +130,27 @@ export const createPostSchema: FastifySchema = {
             difficultyLevel: { type: "string" },
             tags: {
               type: "array",
-              items: { type: "string" }
+              items: { type: "string" },
             },
             image: { type: "string" },
-            author: { type: "string" },
+            author: {
+              type: "object",
+              properties: {
+                id: { type: "string" },
+                // name: { type: "string" },
+                avatar: { type: "string" },
+                level: { type: "string" },
+              },
+              required: ["id"],
+            },
+
             likes: {
               type: "array",
-              items: { type: "string" }
+              items: { type: "string" },
             },
             comments: {
               type: "array",
-              items: { type: "string" }
+              items: { type: "string" },
             },
           },
         },
@@ -142,7 +159,6 @@ export const createPostSchema: FastifySchema = {
     ...commonErrorResponses,
   },
 };
-
 
 export const createCommentsSchema: FastifySchema = {
   description: "API to add a comment to a post",
