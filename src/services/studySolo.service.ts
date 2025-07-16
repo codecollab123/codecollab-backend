@@ -26,4 +26,29 @@ export class StudySoloService extends BaseService {
 
     return data;
   }
+async getAll() {
+    this.logger.info(`StudySoloService: getAll`);
+    const data = await this.studySoloDao.getAllStudySolos();
+    return data;
+}
+
+  async get(query: any) {
+    this.logger.info(`StudySoloService: get -> ${JSON.stringify(query)}`);
+    const data = await this.studySoloDao.getStudySolo(query);
+    return data;
+  }
+
+  async getByUserId(userId: string) {
+    this.logger.info(`StudySoloService: getByUserId -> ${userId}`);
+    const data = await this.studySoloDao.getStudySoloByUserId(userId);
+    return data;
+  }
+
+  async delete(id: string) {
+    this.logger.info(`StudySoloService: delete -> ${id}`);
+    const data = await this.studySoloDao.deleteStudySolo(id);
+    return data;
+  }
+
+
 }

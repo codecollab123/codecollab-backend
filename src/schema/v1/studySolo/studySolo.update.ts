@@ -1,23 +1,30 @@
 import { FastifySchema } from "fastify";
 import { commonErrorResponses } from "../commonErrorCodes";
 
-export const createStudySoloSchema: FastifySchema = {
-  // description: "API to create a StudySolo",
+export const updateStudySoloSchema: FastifySchema = {
+  description: "API to update a StudySolo",
   tags: ["StudySolo"],
-  body: {
+  params: {
     type: "object",
     properties: {
       userId: { type: "string" },
+    },
+    required: ["userId"],
+  },
+  body: {
+    type: "object",
+    properties: {
       background: { type: "string" },
       music: { type: "string" },
       video: { type: "string" },
       quote: { type: "string" },
       todolist: { type: "string" },
     },
+    required: [], // All fields are optional for update
   },
   response: {
     200: {
-      description: "Success",
+      description: "StudySolo updated successfully",
       type: "object",
       properties: {
         data: {
@@ -30,7 +37,11 @@ export const createStudySoloSchema: FastifySchema = {
             video: { type: "string" },
             quote: { type: "string" },
             todolist: { type: "string" },
+            createdAt: { type: "string", format: "date-time" },
+            updatedAt: { type: "string", format: "date-time" },
+            __v: { type: "number" },
           },
+          required: ["_id", "userId"],
         },
       },
     },
