@@ -24,13 +24,19 @@ export class UserDAO extends BaseDAO {
     try {
       return await this.model.find({ userName });
     } catch (error: any) {
-      throw new Error(`Failed to fetch freelancer data: ${error.message}`);
+      throw new Error(`Failed to fetch user data: ${error.message}`);
     }
   }
 
-  async updateUser(userId: string, updates: Partial<IUser>) {
+ async updateUser(userId: string, updates: Partial<IUser>) {
+  console.log("Updating user with ID:", userId);
+  const existing = await this.model.findById(userId);
+  if (!existing) {
+    console.log("User not found in DB");
+  }
   return this.model.findByIdAndUpdate(userId, updates, { new: true });
 }
+
 
   async createUser(userData: createUser) {
     try {

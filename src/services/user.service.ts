@@ -12,7 +12,7 @@ export class UserService extends BaseService {
   private UserDAO!: UserDAO;
 
   /**
-   * Service method to register a new FREELANCER
+   * Service method to register a new USER
    * @param body
    * @param em
    * @returns
@@ -68,10 +68,10 @@ export class UserService extends BaseService {
     }
   };
 
-async updateUserProfile(userId: string, updates: Partial<IUser>) {
+async updateUserProfile(_id: string, updates: Partial<IUser>) {
   try {
-    this.logger.info(`UserService: Updating user with ID: ${userId}`);
-    const updatedUser = await this.UserDAO.updateUser(userId, updates);
+    this.logger.info(`UserService: Updating user with ID: ${_id}`);
+    const updatedUser = await this.UserDAO.updateUser(_id, updates);
 
     if (!updatedUser) {
       throw new NotFoundError(

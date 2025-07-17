@@ -1,4 +1,5 @@
 export interface UpdateUserInfo {
+  _id: string;
   firstname?: string;   
   lastname?:string;    
   bio?: string;          

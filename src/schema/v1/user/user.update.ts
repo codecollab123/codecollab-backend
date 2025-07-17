@@ -9,9 +9,9 @@ export const updateUserSchema: FastifySchema = {
   params: {
     type: "object",
     properties: {
-      id: { type: "string" },
+      _id: { type: "string" },
     },
-    required: ["id"],
+    required: ["_id"],
   },
 
   body: {
@@ -23,7 +23,7 @@ export const updateUserSchema: FastifySchema = {
       email: { type: "string", format: "email" },
       phone: { type: "string", pattern: "^[0-9]{10}$" },
       dob: { type: "string", format: "date-time" },
-      profilePic: { type: "string", format: "uri" },
+      profilePic: { type: "string" },
     },
     required: [], 
     additionalProperties: false,
@@ -46,6 +46,7 @@ export const updateUserSchema: FastifySchema = {
             dob: { type: "string", format: "date-time" },
             profilePic: { type: "string" },
           },
+           required: ["_id"], 
           additionalProperties: false,
         },
       },

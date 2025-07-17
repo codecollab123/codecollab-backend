@@ -11,7 +11,7 @@ export class RoomService extends BaseService {
   private RoomDAO!: RoomDAO;
 
   /**
-   * Service method to register a new FREELANCER
+   * Service method to register a new USER
    * @param body
    * @param em
    * @returns
