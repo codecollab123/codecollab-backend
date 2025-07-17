@@ -26,19 +26,19 @@ export default class UserController extends BaseController {
   @PUT(UPDATE_USER_PROFILE, { schema: updateUserSchema })
   async updateUser(
     request: FastifyRequest<{
-      Params: { id: string };
+      Params: { _id: string };
       Body: any;
     }>,
     reply: FastifyReply
   ) {
     try {
       this.logger.info(
-        `UserController -> updateUser -> Updating user with ID ${request.params.id}`
+        `UserController -> updateUser -> Updating user with ID ${request.params._id}`
       );
 
       const updatedUser = await this.userService.updateUserProfile(
-        request.params.id,
-        request.body as Partial<IUser> // ✅ fixed here
+        request.params._id,
+        request.body as Partial<IUser> 
       );
 
       if (!updatedUser) {
@@ -57,40 +57,41 @@ export default class UserController extends BaseController {
       });
     }
   }
+  
   @GET(USER_ID_DETAILS_ENDPOINT, { schema: getUserDetails })
-  async getUserDetails(
-    request: FastifyRequest<{ Params: GetUserPathParams }>,
-    reply: FastifyReply
-  ) {
-    try {
-      this.logger.info(
-        `FreelancerController -> getFreelancerDetails -> Fetching freelancer details for ID: ${request.params.User_id}`
+async getUserDetails(
+  request: FastifyRequest<{ Params: GetUserPathParams }>,
+  reply: FastifyReply
+) {
+  try {
+    this.logger.info(
+      `USERController -> getUserDetails -> Fetching user details for ID: ${request.params.User_id}`
+    );
+
+    const data = await this.userService.getUserProfile(request.params.User_id);
+
+    reply.status(STATUS_CODES.SUCCESS).send(data);
+  } catch (error: any) {
+    this.logger.error(`Error in getUser: ${error.message}`);
+
+    if (
+      error.ERROR_CODES === "USER_NOT_FOUND" ||
+      error.message.includes("User with provided ID could not be found.")
+    ) {
+      this.logger.warn(
+        `User with ID ${request.params.User_id} not found`
       );
 
-      const data = await this.userService.getUserProfile(
-        request.params.User_id
-      );
-
-     
-      reply.status(STATUS_CODES.SUCCESS).send(data);
-    } catch (error: any) {
-      this.logger.error(`Error in getFreelancer: ${error.message}`);
-      if (
-        error.ERROR_CODES === "FREELANCER_NOT_FOUND" ||
-        error.message.includes(
-          "Freelancer with provided ID could not be found."
-        )
-      ) {
-        reply.status(STATUS_CODES.NOT_FOUND).send({
-          message: RESPONSE_MESSAGE.NOT_FOUND("Freelancer"),
-          code: ERROR_CODES.NOT_FOUND,
-        });
-      } else {
-        reply.status(STATUS_CODES.SERVER_ERROR).send({
-          message: RESPONSE_MESSAGE.SERVER_ERROR,
-          code: ERROR_CODES.SERVER_ERROR,
-        });
-      }
+      reply.status(STATUS_CODES.NOT_FOUND).send({
+        message: RESPONSE_MESSAGE.NOT_FOUND("User"),
+        code: ERROR_CODES.NOT_FOUND,
+      });
+    } else {
+      reply.status(STATUS_CODES.SERVER_ERROR).send({
+        message: RESPONSE_MESSAGE.SERVER_ERROR,
+        code: ERROR_CODES.SERVER_ERROR,
+      });
     }
   }
+}
 }

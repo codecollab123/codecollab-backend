@@ -36,7 +36,6 @@ export const RESPONSE_MESSAGE = {
   INVALID: (entity: string = "User") => `${entity} not valid`, // Invalid entity error
   USER_NOT_FOUND: "User not found", // User not found
   USER_EXISTS: "User already exists", // User already exists
-  FREELANCER_PROJECT_NOT_FOUND: "Freelancer project not found by id", // Freelancer project not found
   PROJECT_NOT_FOUND: "Project by provided ID was not found.", // Project not found by ID
   DRAFT_SUB_NOT_FOUND: "No subscription found for this draft owner", // No draft subscription found
   PROJECT_NOT_FOUND_EMAIL: "Project not found by email.", // Project not found by email
@@ -89,13 +88,12 @@ export const ERROR_CODES = {
   USER_ALREADY_EXIST: "USER_ALREADY_EXIST", // User already exists
   PASSWORDS_DO_NOT_MATCH: "PASSWORDS_DO_NOT_MATCH", // Passwords do not match error
   USER_ALREADY_REGISTERED: "USER_ALREADY_REGISTERED", // User is already registered
-  FREELANCER_NOT_FOUND: "FREELANCER_NOT_FOUND", // Freelancer not found by ID
+  USER_NOT_FOUND: "USER_NOT_FOUND", // USER not found by ID
   ADMIN_NOT_FOUND: "ADMIN_NOT_FOUND", // Admin not found by ID
   EXPERIENCE_NOT_FOUND: "EXPERIENCE_NOT_FOUND", // Experience not found by ID
   EDUCATION_NOT_FOUND: "EDUCATION_NOT_FOUND", // Education not found by ID
-  FREELANCER_PROJECT_NOT_FOUND: "PROJECT_NOT_FOUND", // Freelancer project not found by ID
+  USER_PROJECT_NOT_FOUND: "PROJECT_NOT_FOUND", //USER project not found by ID
   BUSINESS_PROJECT_NOT_FOUND: "PROJECT_NOT_FOUND", // Business project not found
-  HIRE_DEHIX_TALENT_NOT_FOUND: "HIRE_DEHIX_TALENT_NOT_FOUND", // Hire Dehix talent not found by ID
   DEHIX_TALENT_NOT_FOUND: "DEHIX_TALENT_NOT_FOUND", // Dehix Talent not found
   OFFERS_NOT_FOUND: "OFFERS_NOT_FOUND", // Offers not found
   OTP_MISMATCH: "OTP_MISMATCH", // One-time password mismatch error
@@ -103,7 +101,6 @@ export const ERROR_CODES = {
   FST_ERR_VALIDATION: "FST_ERR_VALIDATION", // Fastify validation error
   PLAN_NOT_FOUND: "No plan configuration found", // No plan configuration found
   CUSTOM_TOKEN_GENERATION_FAILED: "CUSTOM_TOKEN_GENERATION_FAILED", // Custom token generation failed
-  USER_NOT_FOUND: "USER_NOT_FOUND", // User not found
   SUBSCRIPTION_NOT_FOUND: "SUBSCRIPTION_NOT_FOUND", // Subscription not found
   DRAFT_IS_INCOMPLETE: "DRAFT_IS_INCOMPLETE", // Incomplete draft error
   HOTEL_LIMIT_REACHED: "HOTEL_LIMIT_REACHED", // Limit for adding hotels reached
@@ -185,7 +182,7 @@ export const PASSWORD_SALT_ROUNDS = 10;
 
 // Types of users stored in Firebase
 export const FIREBASE_USER_TYPE = {
-  FREELANCER: "FREELANCER", // Freelancer user type
+  USER: "USER", // user user type
   CUSTOMER: "CUSTOMER", // Customer user type
   FMV_ADMIN: "FMV_ADMIN", // Admin user type
 };
