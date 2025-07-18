@@ -115,11 +115,11 @@ async createComment(postId: string, commentData: any) {
 
   async deletePost(postId: string, userId: string) {
     try {
-      console.log("Deleting post with:", postId, "and authorId:", userId);
+      console.log("Deleting post with:", postId, "and authorId.id:", userId);
 
       const deletedPost = await this.model.findOneAndDelete({
         _id: postId,
-        author: userId,
+        "author.id": userId,
       });
       console.log("Deleted Post:", deletedPost);
       if (!deletedPost) {
