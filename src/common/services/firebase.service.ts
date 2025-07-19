@@ -23,15 +23,11 @@ class FirebaseClient {
   }
 
 async init() {
-  let serviceAccountPath = path.resolve(
-    process.cwd(),
-    "src/common/config/firebase-dev.json"
-  );
-
-  // Agar render pe deploy ho raha hai to secret file ka path change kar de
-  if (process.env.RENDER === "true") {
-    serviceAccountPath = "/etc/secrets/firebase-dev.json";
-  }
+  // 🔥 Check for secret file path in Render
+  let serviceAccountPath =
+    process.env.NODE_ENV === "production"
+      ? "/etc/secrets/firebase-dev.json"
+      : path.resolve(process.cwd(), "src/common/config/firebase-dev.json");
 
   const serviceAccount = JSON.parse(
     fs.readFileSync(serviceAccountPath, "utf8")
