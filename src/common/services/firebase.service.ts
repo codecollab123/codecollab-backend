@@ -22,19 +22,21 @@ class FirebaseClient {
     );
   }
 
-  async init() {
-    const dirName = path.dirname(new URL(import.meta.url).pathname);
-    const serviceAccountPath = path
-      .join(dirName, `../../common/config/firebase-dev.json`)
-      .replace(/^\\([A-Za-z]:)/, "$1");
-    const serviceAccount = JSON.parse(
-      fs.readFileSync(serviceAccountPath, "utf8"),
-    );
+async init() {
+  const serviceAccountPath = path.resolve(
+    process.cwd(),
+    "src/common/config/firebase-dev.json"
+  );
 
-    this.admin = admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
-    });
-  }
+  const serviceAccount = JSON.parse(
+    fs.readFileSync(serviceAccountPath, "utf8")
+  );
+
+  this.admin = admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+  });
+}
+
 
   /**
    * method to create firebase user
