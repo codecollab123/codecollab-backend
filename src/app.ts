@@ -145,7 +145,7 @@ export const configure = async () => {
   if (!global.LAMBDA_ENV) {
     console.log("Running App env");
 
-    app.listen({ port: Number(process.env.SERVER_PORT) }, (err: any) => {
+    app.listen({ port: Number(process.env.PORT) }, (err: any) => {
       if (err) console.error(err);
       console.log(`server listening on ${process.env.SERVER_PORT}`);
     });
