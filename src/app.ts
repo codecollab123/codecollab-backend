@@ -147,7 +147,7 @@ export const configure = async () => {
 
     app.listen({ port: Number(process.env.PORT) }, (err: any) => {
       if (err) console.error(err);
-      console.log(`server listening on ${process.env.SERVER_PORT}`);
+      console.log(`server listening on ${process.env.PORT}`);
     });
   }
 };
