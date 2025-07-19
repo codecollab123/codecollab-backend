@@ -23,10 +23,15 @@ class FirebaseClient {
   }
 
 async init() {
-  const serviceAccountPath = path.resolve(
+  let serviceAccountPath = path.resolve(
     process.cwd(),
     "src/common/config/firebase-dev.json"
   );
+
+  // Agar render pe deploy ho raha hai to secret file ka path change kar de
+  if (process.env.RENDER === "true") {
+    serviceAccountPath = "/etc/secrets/firebase-dev.json";
+  }
 
   const serviceAccount = JSON.parse(
     fs.readFileSync(serviceAccountPath, "utf8")
@@ -36,6 +41,7 @@ async init() {
     credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
   });
 }
+
 
 
   /**
