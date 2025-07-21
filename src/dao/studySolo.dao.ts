@@ -65,4 +65,6 @@ export class studySoloDao extends BaseDAO {
       throw new Error(`Failed to delete study solo: ${error.message}`);
     }
   }
+
+  
 }
