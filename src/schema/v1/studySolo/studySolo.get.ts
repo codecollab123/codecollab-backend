@@ -102,3 +102,35 @@ export const getStudySoloByUserIdSchema: FastifySchema = {
     ...commonErrorResponses,
   },
 };
+
+export const getStudyStreakByUserIdSchema: FastifySchema = {
+  description: "Fetch study streak data for a user by userId",
+  tags: ["StudySolo"],
+  params: {
+    type: "object",
+    properties: {
+      user_id: { type: "string" },
+    },
+    required: ["user_id"],
+  },
+  response: {
+    200: {
+      type: "object",
+      properties: {
+        data: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              date: { type: "string", format: "date" }, // "2025-07-21"
+              blocks: { type: "number" },                // number of 50-min blocks
+              isStreakDay: { type: "boolean" },          // blocks > 0
+            },
+            required: ["date", "blocks", "isStreakDay"],
+          },
+        },
+      },
+    },
+    ...commonErrorResponses,
+  },
+};

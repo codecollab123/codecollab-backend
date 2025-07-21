@@ -7,7 +7,8 @@ import {
   STUDY_SOLO_GET_ENDPOINT,
   STUDY_SOLO_GET_BY_USER_ID_ENDPOINT,
   STUDY_SOLO_DELETE_ENDPOINT,
-  STUDY_SOLO_CREATE_ENDPOINT
+  STUDY_SOLO_CREATE_ENDPOINT,
+  STUDY_SOLO_GET_STREAK_BY_USER_ID_ENDPOINT
 } from "../constants/studysolo.constant";
 import { AuthController } from "../common/auth.controller";
 import { StudySoloService } from "../services/studySolo.service";
@@ -16,6 +17,8 @@ import { createStudySoloSchema } from "../schema/v1/studySolo/studySolo.create";
 import { updateStudySoloSchema } from "../schema/v1/studySolo/studySolo.update";
 import { getAllStudySoloSchema, getStudySoloByUserIdSchema, getStudySoloSchema } from "../schema/v1/studySolo/studySolo.get";
 import { deleteStudySoloSchema } from "../schema/v1/studySolo/studySolo.delete";
+import { getStudyStreakByUserIdSchema } from "../schema/v1/studySolo/studySolo.get";
+
 
 
 @Controller({route: STUDY_SOLO_ENDPOINT})
@@ -139,4 +142,24 @@ async updateStudySolo(
       });
     }
   }
+
+  @GET(STUDY_SOLO_GET_STREAK_BY_USER_ID_ENDPOINT, { schema: getStudyStreakByUserIdSchema })
+async getStudyStreakByUserId(
+  request: FastifyRequest<{ Params: { user_id: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { user_id } = request.params;
+    const data = await this.studySoloService.getStudyStreakByUserId(user_id);
+    reply.status(STATUS_CODES.SUCCESS).send({ data });
+  } catch (error: any) {
+    this.logger.error(`Error in getStudyStreakByUserId: ${error.message}`);
+    reply.status(STATUS_CODES.SERVER_ERROR).send({
+      message: RESPONSE_MESSAGE.SERVER_ERROR,
+      code: ERROR_CODES.SERVER_ERROR,
+    });
+  }
 }
+
+}
+

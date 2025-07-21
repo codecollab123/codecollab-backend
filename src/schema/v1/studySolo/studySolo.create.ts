@@ -13,6 +13,7 @@ export const createStudySoloSchema: FastifySchema = {
       video: { type: "string" },
       quote: { type: "string" },
       todolist: { type: "string" },
+      duration: { type: "number", minimum: 0 },
     },
   },
   response: {
@@ -30,6 +31,9 @@ export const createStudySoloSchema: FastifySchema = {
             video: { type: "string" },
             quote: { type: "string" },
             todolist: { type: "string" },
+            duration: { type: "number" },
+            createdAt: { type: "string", format: "date-time" },
+            updatedAt: { type: "string", format: "date-time" },
           },
         },
       },

@@ -18,3 +18,6 @@ export const STUDY_SOLO_GET_ALL_ENDPOINT = "/getall";
 
 
 export const STUDY_SOLO_GET_BY_USER_ID_ENDPOINT = "/getbyuserid";
+
+export const STUDY_SOLO_GET_STREAK_BY_USER_ID_ENDPOINT = "/streak/:user_id";
+
