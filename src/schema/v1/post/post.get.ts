@@ -46,7 +46,7 @@ export const getPostsSchema: FastifySchema = {
                 type: "object",
                 properties: {
                   id: { type: "string" },
-                  // name: { type: "string" },
+                  name: { type: "string" },
                   avatar: { type: "string" },
                   level: { type: "string" },
                 },
@@ -76,7 +76,7 @@ export const getPostByIdSchema: FastifySchema = {
   params: {
     type: "object",
     properties: {
-      id: { type: "string", description: "Unique Post ID" },
+      id: { type: "string", description: "Unique User ID" },
     },
     required: ["id"],
   },
@@ -104,7 +104,7 @@ export const getPostByIdSchema: FastifySchema = {
                 type: "object",
                 properties: {
                   id: { type: "string" },
-                  // name: { type: "string" },
+                  name: { type: "string" },
                   avatar: { type: "string" },
                   level: { type: "string" },
                 },

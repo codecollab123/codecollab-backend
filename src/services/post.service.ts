@@ -13,7 +13,7 @@ export class PostService extends BaseService {
     return await this.postDAO.createPost(body);
   } catch (error: any) {
     this.logger.error(`Error in create Post: ${error.message}`);
-    throw error; // ✅ THIS IS MANDATORY
+    throw error; 
   }
 }
 

@@ -11,7 +11,7 @@ export interface IPost extends Document {
   image: string;
   author: {
     id: string;
-    // name: string;
+    name: string;
     avatar?: string;
     level?: string;
   };
@@ -55,12 +55,12 @@ const PostSchema: Schema<IPost> = new Schema({
     type: new Schema(
       {
         id: { type: String, required: true },
-        // name: { type: String, required: true },
+        name: { type: String },
         avatar: { type: String },
         level: { type: String },
       },
       { _id: false }
-    ), // 👈 This line disables auto `_id`
+    ), 
     required: true,
   },
 

@@ -8,7 +8,7 @@ export interface CreatePost {
   image?: string;
    author: {
     id: string;
-    // name: string;
+    name: string;
     avatar: string;
     level: string;
   };

@@ -1,2 +1,9 @@
 export interface GetPost {
-    postId: string;  }
+    postId: string; 
+    author: {
+    id: string;
+    name: string;
+    avatar: string;
+    level: string;
+  };
+ }
