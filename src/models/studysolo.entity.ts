@@ -9,6 +9,7 @@ export interface IStudySolo extends Document {
   video?: string;
   quote?: string;
   todolist?: string;
+  duration?: number; 
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -40,6 +41,10 @@ const StudySoloSchema: Schema<IStudySolo> = new Schema({
   todolist: {
     type: String,
   },
+  duration: {
+  type: Number,
+  default: 0, // or 50 if default sessions are always 50min
+},
   createdAt: {
     type: Date,
     default: Date.now,

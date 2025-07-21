@@ -6,7 +6,6 @@ import { studySoloDao } from '../dao/studySolo.dao';
 export class StudySoloService extends BaseService {
   @Inject(studySoloDao)
   private studySoloDao!: studySoloDao;
-  
   async create(body: any) {
     try {
       this.logger.info(`StudySoloService: create -> create Study Solo: ${body}`);
@@ -50,5 +49,36 @@ async getAll() {
     return data;
   }
 
+  async getStudyStreakByUserId(userId: string): Promise<
+  { date: string; blocks: number; isStreakDay: boolean }[]
+> {
+  this.logger.info(`StudySoloService: getStudyStreakByUserId -> ${userId}`);
 
+  const records = await this.studySoloDao.getStudySoloByUserId(userId);
+
+  const streakMap: Record<string, number> = {};
+
+  for (const session of records) {
+    const createdAt = new Date(session.createdAt!);
+    const dateStr = createdAt.toISOString().split("T")[0];
+    const duration = session.duration ?? 50;
+
+    if (!streakMap[dateStr]) {
+      streakMap[dateStr] = 0;
+    }
+
+    streakMap[dateStr] += duration;
+  }
+
+  const streakArray = Object.entries(streakMap).map(([date, totalDuration]) => {
+    const blocks = Math.floor(totalDuration / 50);
+    return {
+      date,
+      blocks, // ✅ how many 50min blocks that day
+      isStreakDay: blocks > 0,
+    };
+  });
+
+  return streakArray;
+}
 }
