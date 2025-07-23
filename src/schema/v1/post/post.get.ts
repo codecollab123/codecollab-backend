@@ -8,19 +8,68 @@ export const getPostsSchema: FastifySchema = {
     type: "object",
     properties: {
       userId: { type: "string", description: "Filter posts by author userId" },
-      page: {
-        type: "integer",
-        minimum: 1,
-        description: "Page number for pagination",
-      },
-      limit: {
-        type: "integer",
-        minimum: 1,
-        description: "Number of posts per page",
-      },
+      
     },
 
     additionalProperties: false,
+  },
+  response: {
+    200: {
+      description: "Success",
+      type: "object",
+      properties: {
+        data: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              _id: { type: "string" },
+              title: { type: "string" },
+              content: { type: "string" },
+              postType: { type: "string" },
+              difficultyLevel: { type: "string" },
+              tags: {
+                type: "array",
+                items: { type: "string" },
+              },
+              image: { type: "string" },
+              author: {
+                type: "object",
+                properties: {
+                  id: { type: "string" },
+                  name: { type: "string" },
+                  avatar: { type: "string" },
+                  level: { type: "string" },
+                },
+                required: ["id"],
+              },
+              likes: {
+                type: "array",
+                items: { type: "string" },
+              },
+              comments: {
+                type: "array",
+                items: { type: "string" },
+              },
+            },
+          },
+        },
+      },
+    },
+    ...commonErrorResponses,
+  },
+};
+
+export const getPostByUserIdSchema: FastifySchema = {
+  description: "API to fetch a single post by ID",
+  summary: "Get post by USER ID",
+  tags: ["Post"],
+  params: {
+    type: "object",
+    properties: {
+      id: { type: "string", description: "Unique User ID" },
+    },
+    required: ["id"],
   },
   response: {
     200: {
@@ -76,9 +125,9 @@ export const getPostByIdSchema: FastifySchema = {
   params: {
     type: "object",
     properties: {
-      id: { type: "string", description: "Unique User ID" },
+      postId: { type: "string", description: "Unique Post ID" },
     },
-    required: ["id"],
+    required: ["postId"],
   },
   response: {
     200: {
@@ -86,46 +135,42 @@ export const getPostByIdSchema: FastifySchema = {
       type: "object",
       properties: {
         data: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              _id: { type: "string" },
-              title: { type: "string" },
-              content: { type: "string" },
-              postType: { type: "string" },
-              difficultyLevel: { type: "string" },
-              tags: {
-                type: "array",
-                items: { type: "string" },
+          type: "object",
+          properties: {
+            _id: { type: "string" },
+            title: { type: "string" },
+            content: { type: "string" },
+            postType: { type: "string" },
+            difficultyLevel: { type: "string" },
+            tags: {
+              type: "array",
+              items: { type: "string" },
+            },
+            image: { type: "string" },
+            author: {
+              type: "object",
+              properties: {
+                id: { type: "string" },
               },
-              image: { type: "string" },
-              author: {
-                type: "object",
-                properties: {
-                  id: { type: "string" },
-                  name: { type: "string" },
-                  avatar: { type: "string" },
-                  level: { type: "string" },
-                },
-                required: ["id"],
-              },
-              likes: {
-                type: "array",
-                items: { type: "string" },
-              },
-              comments: {
-                type: "array",
-                items: { type: "string" },
-              },
+              required: ["id"],
+            },
+            likes: {
+              type: "array",
+              items: { type: "string" },
+            },
+            comments: {
+              type: "array",
+              items: { type: "string" },
             },
           },
+          required: ["_id", "title", "content", "author"], // adjust as per need
         },
       },
     },
     ...commonErrorResponses,
   },
 };
+
 export const getContributionCountSchema: FastifySchema = {
   description: "API to get contribution count by user ID",
   summary: "Get contribution count",

@@ -30,5 +30,7 @@ export const DELETE_POST_BY_ID = "/:postId";
 //endpoint to get the bookmark/save post by an id
 export const BOOKMARK_POST_BY_ID = "/:user_id/bookmark";
 
+export const GET_POST_BY_POST_ID = "/:postId"; // This is for GET /post/:postId
+
 //endpoitn for updating the post
-export const UPDATE_POST_BY_ID="/:user_id"
+export const UPDATE_POST_BY_ID="/:postId"

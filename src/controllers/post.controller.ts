@@ -11,7 +11,8 @@ import { POST_BASE_ENDPOINT,
   DELETE_POST_BY_ID, 
   BOOKMARK_POST_BY_ID,
   UPDATE_POST_BY_ID,
-  GET_CONTRIBUTION_COUNT_BY_ID
+  GET_CONTRIBUTION_COUNT_BY_ID,
+  GET_POST_BY_POST_ID
  } from "../constants/post.constant";
 import { AuthController } from "../common/auth.controller";
 import { PostService } from "../services/post.service";
@@ -20,7 +21,7 @@ import { ERROR_CODES, RESPONSE_MESSAGE, STATUS_CODES } from "../common/constants
 
 import { createCommentsSchema, createPostSchema } from "../schema/v1/post/post.create";
 import { deletePostSchema } from "../schema/v1/post/post.delete";
-import { getBookmarksSchema, getCommentsSchema, getContributionCountSchema, getDislikesSchema, getLikesSchema, getPostByIdSchema, getPostsSchema } from "../schema/v1/post/post.get";
+import { getBookmarksSchema, getCommentsSchema, getContributionCountSchema, getDislikesSchema, getLikesSchema, getPostByIdSchema, getPostByUserIdSchema, getPostsSchema } from "../schema/v1/post/post.get";
 import { updatePostSchema } from "../schema/v1/post/post.update";
 
 @Controller({ route: POST_BASE_ENDPOINT })
@@ -54,7 +55,7 @@ export default class PostController extends AuthController {
     }
   }
 
- @GET(GET_USER_POSTS_BY_ID, { schema: getPostByIdSchema })
+ @GET(GET_USER_POSTS_BY_ID, { schema: getPostByUserIdSchema })
 async getUserPosts(request: FastifyRequest, reply: FastifyReply) {
   const { id } = request.params as { id: string };
 
@@ -155,15 +156,34 @@ async deletePost(request: FastifyRequest<{ Params: { postId: string } }>, reply:
   }
 }
 
+@GET(GET_POST_BY_POST_ID, { schema: getPostByIdSchema })
+async getPostById(request: FastifyRequest<{ Params: { postId: string } }>, reply: FastifyReply) {
+  try {
+    const { postId } = request.params;
+    this.logger.info(`Getting post with ID: ${postId}`);
+    const post = await this.postService.findPostById(postId);
+
+    if (!post) {
+      return reply.status(404).send({ message: "Post not found" });
+    }
+
+    return reply.status(200).send({ data: post }); // ✅ FIXED
+  } catch (err) {
+    this.logger.error("Error fetching post by ID", err);
+    reply.status(500).send({ message: "Internal Server Error" });
+  }
+}
+
 
   @PUT(UPDATE_POST_BY_ID, { schema: updatePostSchema })
   async updatePost(
-    request: FastifyRequest<{ Params: { id: string }; Body: any }>,
+    request: FastifyRequest<{ Params: { postId: string }; Body: any }>,
     reply: FastifyReply
   ) {
     try {
-      const { id } = request.params;
-      const updatedPost = await this.postService.update(id, request.body, request.userId);
+      const { postId } = request.params;
+       const userId = request.userId;
+      const updatedPost = await this.postService.update(postId, request.body, userId);
   
       if (!updatedPost) {
         return reply.status(STATUS_CODES.NOT_FOUND).send({ message: "Post not found" });
