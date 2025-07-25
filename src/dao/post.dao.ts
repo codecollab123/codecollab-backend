@@ -38,41 +38,44 @@ async getContributionCountByUser(userId: string): Promise<number> {
   }
 
 
-  async getAllPosts() {
-    try {
-      return await this.model.find();
-    } catch (error: any) {
-      throw new Error(`Failed to fetch posts: ${error.message}`);
-    }
+async getAllPosts() {
+  try {
+    return await this.model
+      .find()
+      .populate('author', 'name avatar level'); // only populate necessary fields
+  } catch (error: any) {
+    throw new Error(`Failed to fetch posts: ${error.message}`);
   }
+}
+
 
   async getUserPosts(userId: string) {
     return await this.model.find({ "author.id": userId });
   }
 
-  async likePost(postId: string, userId: string) {
-    try {
-      return await this.model.findByIdAndUpdate(
-        postId,
-        { $addToSet: { likes: userId } },
-        { new: true }
-      );
-    } catch (error: any) {
-      throw new Error(`Failed to like post: ${error.message}`);
-    }
-  }
+  // async likePost(postId: string, userId: string) {
+  //   try {
+  //     return await this.model.findByIdAndUpdate(
+  //       postId,
+  //       { $addToSet: { likes: userId } },
+  //       { new: true }
+  //     );
+  //   } catch (error: any) {
+  //     throw new Error(`Failed to like post: ${error.message}`);
+  //   }
+  // }
 
-  async dislikePost(postId: string, userId: string) {
-    try {
-      return await this.model.findByIdAndUpdate(
-        postId,
-        { $pull: { likes: userId } },
-        { new: true }
-      );
-    } catch (error: any) {
-      throw new Error(`Failed to dislike post: ${error.message}`);
-    }
-  }
+  // async dislikePost(postId: string, userId: string) {
+  //   try {
+  //     return await this.model.findByIdAndUpdate(
+  //       postId,
+  //       { $pull: { likes: userId } },
+  //       { new: true }
+  //     );
+  //   } catch (error: any) {
+  //     throw new Error(`Failed to dislike post: ${error.message}`);
+  //   }
+  // }
 
 async createComment(postId: string, commentData: any) {
   try {

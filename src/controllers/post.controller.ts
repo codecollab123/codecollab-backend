@@ -4,8 +4,6 @@ import { POST_BASE_ENDPOINT,
   CREATE_POST_ENDPOINT, 
   GET_ALL_POSTS_ENDPOINT, 
   GET_USER_POSTS_BY_ID, 
-  LIKE_POST_BY_ID, 
-  DISLIKE_POST_BY_ID, 
   CREATE_COMMENTS_BY_ID, 
   GET_COMMENTS_BY_ID, 
   DELETE_POST_BY_ID, 
@@ -21,7 +19,7 @@ import { ERROR_CODES, RESPONSE_MESSAGE, STATUS_CODES } from "../common/constants
 
 import { createCommentsSchema, createPostSchema } from "../schema/v1/post/post.create";
 import { deletePostSchema } from "../schema/v1/post/post.delete";
-import { getBookmarksSchema, getCommentsSchema, getContributionCountSchema, getDislikesSchema, getLikesSchema, getPostByIdSchema, getPostByUserIdSchema, getPostsSchema } from "../schema/v1/post/post.get";
+import { getBookmarksSchema, getCommentsSchema, getContributionCountSchema, getPostByIdSchema, getPostByUserIdSchema, getPostsSchema } from "../schema/v1/post/post.get";
 import { updatePostSchema } from "../schema/v1/post/post.update";
 
 @Controller({ route: POST_BASE_ENDPOINT })
@@ -92,27 +90,27 @@ async getContributionCount(
   }
 }
 
-  @GET(LIKE_POST_BY_ID,{schema:getLikesSchema})
-  async likePost(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
-    try {
-      const data = await this.postService.like(request.params.id, request.userId);
-      reply.status(STATUS_CODES.SUCCESS).send({ data });
-    } catch (error: any) {
-      this.logger.error(`Error in likePost: ${error.message}`);
-      reply.status(STATUS_CODES.SERVER_ERROR).send({ message: RESPONSE_MESSAGE.SERVER_ERROR });
-    }
-  }
+  // @GET(LIKE_POST_BY_ID,{schema:getLikesSchema})
+  // async likePost(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
+  //   try {
+  //     const data = await this.postService.like(request.params.id, request.userId);
+  //     reply.status(STATUS_CODES.SUCCESS).send({ data });
+  //   } catch (error: any) {
+  //     this.logger.error(`Error in likePost: ${error.message}`);
+  //     reply.status(STATUS_CODES.SERVER_ERROR).send({ message: RESPONSE_MESSAGE.SERVER_ERROR });
+  //   }
+  // }
 
-  @GET(DISLIKE_POST_BY_ID,{schema: getDislikesSchema})
-  async dislikePost(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
-    try {
-      const data = await this.postService.dislike(request.params.id, request.userId);
-      reply.status(STATUS_CODES.SUCCESS).send({ data });
-    } catch (error: any) {
-      this.logger.error(`Error in dislikePost: ${error.message}`);
-      reply.status(STATUS_CODES.SERVER_ERROR).send({ message: RESPONSE_MESSAGE.SERVER_ERROR });
-    }
-  }
+  // @GET(DISLIKE_POST_BY_ID,{schema: getDislikesSchema})
+  // async dislikePost(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
+  //   try {
+  //     const data = await this.postService.dislike(request.params.id, request.userId);
+  //     reply.status(STATUS_CODES.SUCCESS).send({ data });
+  //   } catch (error: any) {
+  //     this.logger.error(`Error in dislikePost: ${error.message}`);
+  //     reply.status(STATUS_CODES.SERVER_ERROR).send({ message: RESPONSE_MESSAGE.SERVER_ERROR });
+  //   }
+  // }
 
   @POST(CREATE_COMMENTS_BY_ID,{schema:createCommentsSchema})
   async addComment(request: FastifyRequest<{ Body: any; Params: { id: string } }>, reply: FastifyReply) {

@@ -12,11 +12,11 @@ export const GET_USER_POSTS_BY_ID = "/:id/userpost";
 // endpoint to get contribution count of a user
 export const GET_CONTRIBUTION_COUNT_BY_ID = "/:userId/contributions";
 
-//endpoint to get the like post by an id
-export const LIKE_POST_BY_ID = "/:user_id/like";
+// //endpoint to get the like post by an id
+// export const LIKE_POST_BY_ID = "/:user_id/like";
 
-//endpoint to get the dislike post by an id
-export const DISLIKE_POST_BY_ID = "/:user_id/dislike";
+// //endpoint to get the dislike post by an id
+// export const DISLIKE_POST_BY_ID = "/:user_id/dislike";
 
 //endpoint to get the like post by an id
 export const CREATE_COMMENTS_BY_ID = "/:_id/comment";

@@ -1,5 +1,6 @@
 import { FastifySchema } from "fastify";
 import { commonErrorResponses } from "../commonErrorCodes";
+
 export const getPostsSchema: FastifySchema = {
   description: "API for retrieving posts",
   summary: "API to Get All Posts",
@@ -234,65 +235,65 @@ export const getCommentsSchema: FastifySchema = {
   },
 };
 
-// ✅ Get Likes Schema
-export const getLikesSchema: FastifySchema = {
-  description: "API to get likes of a post",
-  summary: "Fetch likes for a post",
-  tags: ["Post"],
-  params: {
-    type: "object",
-    properties: {
-      id: { type: "string", description: "Post ID to get likes" },
-    },
-    required: ["id"],
-  },
-  response: {
-    200: {
-      description: "Success",
-      type: "object",
-      properties: {
-        data: {
-          type: "array",
-          items: {
-            type: "string",
-            description: "User IDs who liked the post",
-          },
-        },
-      },
-    },
-    ...commonErrorResponses,
-  },
-};
+// // ✅ Get Likes Schema
+// export const getLikesSchema: FastifySchema = {
+//   description: "API to get likes of a post",
+//   summary: "Fetch likes for a post",
+//   tags: ["Post"],
+//   params: {
+//     type: "object",
+//     properties: {
+//       id: { type: "string", description: "Post ID to get likes" },
+//     },
+//     required: ["id"],
+//   },
+//   response: {
+//     200: {
+//       description: "Success",
+//       type: "object",
+//       properties: {
+//         data: {
+//           type: "array",
+//           items: {
+//             type: "string",
+//             description: "User IDs who liked the post",
+//           },
+//         },
+//       },
+//     },
+//     ...commonErrorResponses,
+//   },
+// };
 
-// ✅ Get Dislikes Schema
-export const getDislikesSchema: FastifySchema = {
-  description: "API to get dislikes of a post",
-  summary: "Fetch dislikes for a post",
-  tags: ["Post"],
-  params: {
-    type: "object",
-    properties: {
-      id: { type: "string", description: "Post ID to get dislikes" },
-    },
-    required: ["id"],
-  },
-  response: {
-    200: {
-      description: "Success",
-      type: "object",
-      properties: {
-        data: {
-          type: "array",
-          items: {
-            type: "string",
-            description: "User IDs who disliked the post",
-          },
-        },
-      },
-    },
-    ...commonErrorResponses,
-  },
-};
+// // ✅ Get Dislikes Schema
+// export const getDislikesSchema: FastifySchema = {
+//   description: "API to get dislikes of a post",
+//   summary: "Fetch dislikes for a post",
+//   tags: ["Post"],
+//   params: {
+//     type: "object",
+//     properties: {
+//       id: { type: "string", description: "Post ID to get dislikes" },
+//     },
+//     required: ["id"],
+//   },
+//   response: {
+//     200: {
+//       description: "Success",
+//       type: "object",
+//       properties: {
+//         data: {
+//           type: "array",
+//           items: {
+//             type: "string",
+//             description: "User IDs who disliked the post",
+//           },
+//         },
+//       },
+//     },
+//     ...commonErrorResponses,
+//   },
+// };
 
 export const getBookmarksSchema: FastifySchema = {
   description: "API to get bookmarks of a user",

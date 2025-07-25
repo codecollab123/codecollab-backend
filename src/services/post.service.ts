@@ -31,15 +31,15 @@ export class PostService extends BaseService {
     return await this.postDAO.getContributionCountByUser(userId);
   }
 
-  async like(postId: string, userId: string) {
-    if (!userId) throw new Error("User ID is required");
-    return await this.postDAO.likePost(postId, userId);
-  }
+  // async like(postId: string, userId: string) {
+  //   if (!userId) throw new Error("User ID is required");
+  //   return await this.postDAO.likePost(postId, userId);
+  // }
 
-  async dislike(postId: string, userId: string) {
-    if (!userId) throw new Error("User ID is required");
-    return await this.postDAO.dislikePost(postId, userId);
-  }
+  // async dislike(postId: string, userId: string) {
+  //   if (!userId) throw new Error("User ID is required");
+  //   return await this.postDAO.dislikePost(postId, userId);
+  // }
 
   async createComment(postId: string, commentData: any, userId: string) {
     if (!userId) throw new Error("User ID is required");
