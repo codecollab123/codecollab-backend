@@ -9,7 +9,10 @@ export interface IStudySolo extends Document {
   video?: string;
   quote?: string;
   todolist?: string;
-  duration?: number; 
+  duration?: number;
+  streakCount?: number;        
+  lastStudiedDate?: Date;     
+  
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -45,6 +48,14 @@ const StudySoloSchema: Schema<IStudySolo> = new Schema({
   type: Number,
   default: 0, // or 50 if default sessions are always 50min
 },
+  streakCount: {
+    type: Number,
+    default: 0, // Initialize streak count to 0
+  },
+  lastStudiedDate: {
+    type: Date,
+    default: null, // Initialize to null, will be set when user studies
+  },
   createdAt: {
     type: Date,
     default: Date.now,

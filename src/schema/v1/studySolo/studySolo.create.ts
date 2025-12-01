@@ -14,6 +14,9 @@ export const createStudySoloSchema: FastifySchema = {
       quote: { type: "string" },
       todolist: { type: "string" },
       duration: { type: "number", minimum: 0 },
+      streakCount: { type: "number" },
+lastStreakDate: { type: "string", format: "date" },
+
     },
   },
   response: {
@@ -32,6 +35,9 @@ export const createStudySoloSchema: FastifySchema = {
             quote: { type: "string" },
             todolist: { type: "string" },
             duration: { type: "number" },
+            streakCount: { type: "number" },
+lastStreakDate: { type: "string", format: "date" },
+
             createdAt: { type: "string", format: "date-time" },
             updatedAt: { type: "string", format: "date-time" },
           },
