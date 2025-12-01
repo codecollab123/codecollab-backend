@@ -27,7 +27,7 @@ async init() {
   let serviceAccountPath =
     process.env.NODE_ENV === "production"
       ? "/etc/secrets/firebase-dev.json"
-      : path.resolve(process.cwd(), "src/common/config/firebase-dev.json");
+      : path.resolve(process.cwd(), "common/config/firebase-dev.json");
 
   const serviceAccount = JSON.parse(
     fs.readFileSync(serviceAccountPath, "utf8")
