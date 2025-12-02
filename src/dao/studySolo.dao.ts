@@ -5,6 +5,7 @@ import StudySoloModel, { IStudySolo } from "../models/studysolo.entity";
 
 @Service()
 export class studySoloDao extends BaseDAO {
+ 
   model: Model<IStudySolo>;
 
   constructor() {
@@ -66,5 +67,60 @@ export class studySoloDao extends BaseDAO {
     }
   }
 
-  
+// async updateStreakIfEligible(userId: string) {
+//   try {
+//     const studySolo = await this.model.findOne({ userId });
+
+//     if (!studySolo) {
+//       throw new Error("StudySolo record not found");
+//     }
+
+//     const currentDate = new Date();
+//     const currentDateStr = currentDate.toDateString();
+//     const lastStudyDateStr = studySolo.lastStudiedDate
+//       ? new Date(studySolo.lastStudiedDate).toDateString()
+//       : null;
+
+//     if (lastStudyDateStr === currentDateStr) {
+//       return { message: "Already updated for today", streak: studySolo.streakCount ?? 0 };
+//     }
+
+//     const yesterday = new Date();
+//     yesterday.setDate(yesterday.getDate() - 1);
+//     const yesterdayStr = yesterday.toDateString();
+
+//     let newStreak = 1;
+//     if (lastStudyDateStr === yesterdayStr) {
+//       newStreak = (studySolo.streakCount ?? 0) + 1;
+//     }
+
+//     await this.model.updateOne(
+//       { userId },
+//       {
+//         $set: {
+//           streakCount: newStreak,
+//           lastStudiedDate: currentDate,
+//         },
+//       }
+//     );
+
+//     return { message: "Streak updated", streak: newStreak };
+//   } catch (error: any) {
+//     throw new Error(`Failed to update streak: ${error.message}`);
+//   }
+// }
+
+async updateUserStreak(userId: string, streakCount: number, lastStreakDate: Date) {
+  await this.model.updateMany(
+    { userId },
+    {
+      $set: {
+        streakCount,
+        lastStreakDate,
+      },
+    },
+  );
+}
+
+
 }
