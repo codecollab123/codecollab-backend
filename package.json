@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --watch src --ext ts,js --exec \"cross-env NODE_ENV=dev node --loader ts-node/esm src/app.ts\"",
-    "start": "cross-env NODE_ENV=dev node --loader ts-node/esm src/app.ts "
+    "build": "tsc",
+    "start": "node dist/app.js"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +24,7 @@
     "@fastify/swagger": "^9.4.2",
     "@fastify/swagger-ui": "^5.2.1",
     "@fastify/websocket": "^11.0.2",
+    "@google/generative-ai": "^0.24.1",
     "axios": "^1.8.4",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.13",

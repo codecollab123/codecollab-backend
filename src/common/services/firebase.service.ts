@@ -23,15 +23,31 @@ class FirebaseClient {
   }
 
 async init() {
-  // 🔥 Check for secret file path in Render
-  let serviceAccountPath =
+    let serviceAccountPath =
     process.env.NODE_ENV === "production"
       ? "/etc/secrets/firebase-dev.json"
-      : path.resolve(process.cwd(), "src/common/config/firebase-dev.json");
+      : path.resolve(process.cwd(), "common/config/firebase-dev.json");
 
   const serviceAccount = JSON.parse(
     fs.readFileSync(serviceAccountPath, "utf8")
   );
+  logger.info("FirebaseClient -> init -> Initializing Firebase Admin");
+  // logger.info("FirebaseClient -> init -> Initializing Firebase Admin");
+
+  // const serviceAccount = {
+  //   type: process.env.FIREBASE_TYPE,
+  //   project_id: process.env.FIREBASE_PROJECT_ID,
+  //   private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
+  //   private_key: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+  //   client_email: process.env.FIREBASE_CLIENT_EMAIL,
+  //   client_id: process.env.FIREBASE_CLIENT_ID,
+  //   auth_uri: process.env.FIREBASE_AUTH_URI,
+  //   token_uri: process.env.FIREBASE_TOKEN_URI,
+  //   auth_provider_x509_cert_url:
+  //     process.env.FIREBASE_AUTH_PROVIDER_CERT_URL,
+  //   client_x509_cert_url: process.env.FIREBASE_CLIENT_CERT_URL,
+  //   universe_domain: process.env.FIREBASE_UNIVERSE_DOMAIN,
+  // };
 
   this.admin = admin.initializeApp({
     credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
