@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import mongoose from "mongoose";
-import models from "../models/index";
-import { logger } from "../common/services/logger.service";
+import models from "../models/index.js";
+import { logger } from "../common/services/logger.service.js";
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace MongoClient {

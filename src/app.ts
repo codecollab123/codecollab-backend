@@ -2,7 +2,7 @@ import fastify from "fastify";
 import fastifyEnv from "@fastify/env";
 import { bootstrap } from "fastify-decorators";
 import cors from "@fastify/cors";
-import { initializeClients } from "./clients";
+import { initializeClients } from "./clients/index.js";
 import swagger from "@fastify/swagger";
 import swagger_ui from "@fastify/swagger-ui";
 import { logger } from "./common/services/logger.service";

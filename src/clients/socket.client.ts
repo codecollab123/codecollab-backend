@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { Server } from "socket.io";
-import { logger } from "../common/services/logger.service";
+import { logger } from "../common/services/logger.service.js";
 
 export namespace SocketClient {
   export async function init(fastify: FastifyInstance) {

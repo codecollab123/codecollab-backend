@@ -22,23 +22,19 @@ class FirebaseClient {
     );
   }
 
-async init() {
-  // 🔥 Check for secret file path in Render
-  let serviceAccountPath =
-    process.env.NODE_ENV === "production"
-      ? "/etc/secrets/firebase-dev.json"
-      : path.resolve(process.cwd(), "src/common/config/firebase-dev.json");
+  async init() {
+    const dirName = path.dirname(new URL(import.meta.url).pathname);
+    const serviceAccountPath = path
+      .join(dirName, `../../common/config/firebase-dev.json`)
+      .replace(/^\\([A-Za-z]:)/, "$1");
+    const serviceAccount = JSON.parse(
+      fs.readFileSync(serviceAccountPath, "utf8"),
+    );
 
-  const serviceAccount = JSON.parse(
-    fs.readFileSync(serviceAccountPath, "utf8")
-  );
-
-  this.admin = admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
-  });
-}
-
-
+    this.admin = admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+    });
+  }
 
   /**
    * method to create firebase user

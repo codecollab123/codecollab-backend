@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { Server } from "socket.io";
 import { createServer } from "http";
-import { logger } from "../common/services/logger.service";
+import { logger } from "../common/services/logger.service.js";
 export const SocialFeedSocket = {
   async init(fastify: FastifyInstance) {
     const httpServer = createServer(fastify.server);
