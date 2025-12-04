@@ -11,7 +11,8 @@
     "start": "cross-env NODE_ENV=production node dist/app.js",
     "build": "npm run clean && tsc -p tsconfig.json"
   
-  },
+  },  
+  
   "author": "",
   "license": "ISC",
   "devDependencies": {
