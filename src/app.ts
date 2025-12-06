@@ -138,20 +138,29 @@ export const configure = async () => {
 
   try {
     await app.ready();
+    console.log("✅ Fastify app is ready");
   } catch (error) {
-    console.log("An error occurred during initialization:", error);
+    console.error("❌ Error during Fastify initialization:", error);
+    process.exit(1); // Exit if initialization fails
   }
 
   if (!global.LAMBDA_ENV) {
     console.log("Running App env");
 
-  const PORT = Number(process.env.PORT) || 10000;
+    const PORT = Number(process.env.PORT) || 10000;
 
-app.listen({ port: PORT, host: '0.0.0.0' }, (err: any) => {
-  if (err) console.error(err);
-  console.log(`server listening on ${PORT}`);
-});
-
+    try {
+      await app.listen({ port: PORT, host: '0.0.0.0' });
+      console.log(`✅ Server listening on ${PORT}`);
+      console.log(`✅ Server ready at http://0.0.0.0:${PORT}`);
+      
+      // Log registered routes to verify controllers loaded
+      console.log("📋 Registered routes:");
+      app.printRoutes();
+    } catch (err) {
+      console.error("❌ Error starting server:", err);
+      process.exit(1);
+    }
   }
 };
 
