@@ -35,10 +35,10 @@ const app = fastify({
 });
 
 
-// Env path for stages
-const envPath = process.env.NODE_ENV
+// Env path for stages - only use .env files in non-production environments
+const envPath = process.env.NODE_ENV && process.env.NODE_ENV !== 'production'
   ? `./.env.${process.env.NODE_ENV}`
-  : "./.env";
+  : undefined;
 
 const packageJSON = JSON.parse(fs.readFileSync("./package.json", "utf8"));
 
@@ -46,7 +46,7 @@ export const configure = async () => {
   // Register handlers auto-bootstrap
   app.register(fastifyEnv, {
     schema: schema,
-    dotenv: { path: envPath },
+    dotenv: envPath ? { path: envPath } : false,
     data: process.env,
   });
 
@@ -147,7 +147,7 @@ export const configure = async () => {
 
   const PORT = Number(process.env.PORT) || 5000;
 
-app.listen({ port: PORT }, (err: any) => {
+app.listen({ port: PORT, host: '0.0.0.0' }, (err: any) => {
   if (err) console.error(err);
   console.log(`server listening on ${PORT}`);
 });

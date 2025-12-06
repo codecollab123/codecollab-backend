@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: codingcollab-backend
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        generateValue: true
+      - key: SERVER_MONGO_CONN
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY_PRO
+        sync: false
+      - key: RAPID_API_KEY
+        sync: false
+      - key: SENDER_EMAIL_ID
+        sync: false
+      - key: SERVER_URL
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT
+        sync: false

@@ -23,17 +23,34 @@ class FirebaseClient {
   }
 
   async init() {
-    const dirName = path.dirname(new URL(import.meta.url).pathname);
-    const serviceAccountPath = path
-      .join(dirName, `../../common/config/firebase-dev.json`)
-      .replace(/^\\([A-Za-z]:)/, "$1");
-    const serviceAccount = JSON.parse(
-      fs.readFileSync(serviceAccountPath, "utf8"),
-    );
+    try {
+      let serviceAccount: admin.ServiceAccount;
+      
+      // Check if FIREBASE_SERVICE_ACCOUNT env var exists (for production)
+      if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+        logger.info("Using Firebase credentials from environment variable");
+        serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+      } else {
+        // Fallback to local file for development
+        logger.info("Using Firebase credentials from local file");
+        const dirName = path.dirname(new URL(import.meta.url).pathname);
+        const serviceAccountPath = path
+          .join(dirName, `../../common/config/firebase-dev.json`)
+          .replace(/^\\([A-Za-z]:)/, "$1");
+        serviceAccount = JSON.parse(
+          fs.readFileSync(serviceAccountPath, "utf8"),
+        );
+      }
 
-    this.admin = admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
-    });
+      this.admin = admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+      });
+      
+      logger.info("Firebase Admin initialized successfully");
+    } catch (error) {
+      logger.error("Failed to initialize Firebase Admin:", error);
+      throw error;
+    }
   }
 
   /**

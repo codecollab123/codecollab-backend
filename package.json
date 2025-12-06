@@ -5,14 +5,18 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "node -e \"require('fs').rmSync('dist', {recursive: true, force: true})\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --watch src --ext ts,js --exec \"cross-env NODE_ENV=dev node --loader ts-node/esm src/app.ts\"",
     "build": "npm run clean && tsc -p tsconfig.json",
-    "start": "cross-env NODE_ENV=dev node --loader ts-node/esm src/app.ts "
+    "start": "node dist/app.js"
   },
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "devDependencies": {
     "@types/node": "^22.12.0",
     "cross-env": "^10.1.0",
