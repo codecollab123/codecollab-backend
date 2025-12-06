@@ -17,8 +17,6 @@ services:
         sync: false
       - key: RAPID_API_KEY
         sync: false
-      - key: SENDER_EMAIL_ID
-        sync: false
       - key: SERVER_URL
         sync: false
       - key: FIREBASE_SERVICE_ACCOUNT

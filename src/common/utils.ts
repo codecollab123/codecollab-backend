@@ -98,7 +98,7 @@ Note: It does not returns page, limit and other query params but only those whic
 export function extractFilters(url: string): Record<string, Array<string>> {
   const urlObj = new URL(
     url,
-    process.env.SERVER_URL || "http://localhost:8080",
+    process.env.SERVER_URL || "http://localhost:5000",
   );
   const queryParams = new URLSearchParams(urlObj.search);
   const filters = {};

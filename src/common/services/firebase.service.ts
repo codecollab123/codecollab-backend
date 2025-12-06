@@ -4,8 +4,8 @@ import * as path from "path";
 
 // import { SECRETNAMES } from "../constants/secret-manager.constant";
 // import serviceAccount from '../../../config/test-service-account.json' assert { type: 'json' };
-import { ERROR_CODES } from "../constants";
-import { logger } from "./logger.service";
+import { ERROR_CODES } from "../constants.js";
+import { logger } from "./logger.service.js";
 interface FirebaseUserProperties {
   email?: string;
   phoneNumber?: string;

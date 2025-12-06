@@ -1,5 +1,5 @@
-import { firebaseClient } from "./firebase.service"; // Reuse the existing firebase client
-import { logger } from "./logger.service";
+import { firebaseClient } from "./firebase.service.js"; // Reuse the existing firebase client
+import { logger } from "./logger.service.js";
 
 class FirestoreClient {
   private db!: FirebaseFirestore.Firestore;
