@@ -146,6 +146,9 @@ export const configure = async () => {
     console.log("Running App env");
 
   const PORT = Number(process.env.PORT) || 5000;
+  if(!PORT){
+    throw new Error("Port not provide by Railway")
+  }
 
 app.listen({ port: PORT,host:"0.0.0.0" }, (err: any) => {
   if (err) console.error(err);
