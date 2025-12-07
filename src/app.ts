@@ -147,7 +147,7 @@ export const configure = async () => {
 
   const PORT = Number(process.env.PORT) || 5000;
 
-app.listen({ port: PORT }, (err: any) => {
+app.listen({ port: PORT,host:"0.0.0.0" }, (err: any) => {
   if (err) console.error(err);
   console.log(`server listening on ${PORT}`);
 });
