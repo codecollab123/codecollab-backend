@@ -1,11 +1,14 @@
 import {Service, Inject} from 'fastify-decorators';
 import { BaseService } from '../common/base.service';
 import { studySoloDao } from '../dao/studySolo.dao';
-
+import { ActivityService } from './activity.service';
 @Service()
 export class StudySoloService extends BaseService {
   @Inject(studySoloDao)
   private studySoloDao!: studySoloDao;
+
+    @Inject(ActivityService)
+    private activityService!: ActivityService;
  async create(body: any) {
   try {
     this.logger.info(`StudySoloService: create -> create Study Solo: ${body}`);

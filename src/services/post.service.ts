@@ -1,16 +1,28 @@
 import { Service, Inject } from "fastify-decorators";
 import { BaseService } from "../common/base.service";
 import { PostDAO } from "../dao/post.dao";
+import { ActivityService } from "./activity.service";
 
 @Service()
 export class PostService extends BaseService {
   @Inject(PostDAO)
   private postDAO!: PostDAO;
 
+  @Inject(ActivityService)
+  private activityService!: ActivityService;
+
   async create(body: any) {
     try {
       this.logger.info(`PostService: create -> Creating Post`);
-      return await this.postDAO.createPost(body);
+
+      const post = await this.postDAO.createPost(body);
+
+      await this.activityService.logActivity(body.author.id, "CREATED_POST", {
+        postId: post._id,
+        title:post.title,
+      });
+
+      return post;
     } catch (error: any) {
       this.logger.error(`Error in create Post: ${error.message}`);
       throw error;
