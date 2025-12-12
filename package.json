@@ -5,7 +5,7 @@
   "main": "dist/app.js",
   "type": "module",
   "scripts": {
-    "clean": "if exist dist rd /s /q dist",
+    "clean": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --watch src --ext ts,js --exec \"cross-env NODE_ENV=dev node --loader ts-node/esm src/app.ts\"",
     "build": "npm run clean && tsc -p tsconfig.json",
@@ -17,6 +17,7 @@
     "@types/node": "^22.12.0",
     "cross-env": "^10.1.0",
     "nodemon": "^3.1.11",
+    "rimraf": "^6.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },
