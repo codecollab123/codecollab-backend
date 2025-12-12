@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 
 @Service()
 export class PofdDAO {
-  model: Model<IPofd> = PofdModel;  // ✅ FIXED
+  model: Model<IPofd> = PofdModel;  
 
   async getTodayProblem(): Promise<IPofd | null> {
     const todayDate = dayjs().format("YYYY-MM-DD");

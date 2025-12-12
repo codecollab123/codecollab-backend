@@ -2,25 +2,35 @@ import { Service, Inject } from "fastify-decorators";
 import { BaseService } from "../common/base.service";
 import { NotesDao } from "../dao/notes.dao";
 import { INote } from "../models/notes.entity";
+import { ActivityService } from "./activity.service";
 
 @Service()
 export class NotesService extends BaseService {
   @Inject(NotesDao)
   private NotesDao!: NotesDao;
 
+  @Inject(ActivityService)
+  private activityService!: ActivityService;
   async createNotes(notes: INote) {
     this.logger.info(
-      `NotesService -> CreateNotes -> Creating a new note with data: ${JSON.stringify(notes)}`,
+      `NotesService -> CreateNotes -> Creating a new note with data: ${JSON.stringify(
+        notes
+      )}`
     );
     try {
       const note = await this.NotesDao.createNotes(notes, notes.userId);
+      await this.activityService.logActivity(notes.userId, "CREATED_NOTE", {
+        noteId: note._id,
+        title: note.title || "Untitled Note",
+      });
+      return note;
       this.logger.info(
-        `NotesService -> CreateNotes -> Note created successfully with ID: ${note._id}`,
+        `NotesService -> CreateNotes -> Note created successfully with ID: ${note._id}`
       );
       return note;
     } catch (error: any) {
       this.logger.error(
-        `NotesService -> CreateNotes -> Error: ${error.message}`,
+        `NotesService -> CreateNotes -> Error: ${error.message}`
       );
       throw error;
     }
@@ -28,12 +38,12 @@ export class NotesService extends BaseService {
 
   async getNotes({ userId }: { userId: string }) {
     this.logger.info(
-      `NotesService -> GetNotes -> Fetching notes for user ID: ${userId}`,
+      `NotesService -> GetNotes -> Fetching notes for user ID: ${userId}`
     );
     try {
       const notesData = await this.NotesDao.getNotes(userId);
       this.logger.info(
-        `NotesService -> GetNotes -> Notes fetched successfully`,
+        `NotesService -> GetNotes -> Notes fetched successfully`
       );
       return notesData;
     } catch (error: any) {
@@ -44,23 +54,23 @@ export class NotesService extends BaseService {
 
   async deleteNoteById(noteID: string) {
     this.logger.info(
-      `NotesService -> DeleteNoteById -> Deleting note with ID: ${noteID}`,
+      `NotesService -> DeleteNoteById -> Deleting note with ID: ${noteID}`
     );
     try {
       const deleteNote = await this.NotesDao.deleteNoteById(noteID);
       if (deleteNote) {
         this.logger.info(
-          `NotesService -> DeleteNoteById -> Note deleted successfully`,
+          `NotesService -> DeleteNoteById -> Note deleted successfully`
         );
       } else {
         this.logger.info(
-          `NotesService -> DeleteNoteById -> Note not found for ID: ${noteID}`,
+          `NotesService -> DeleteNoteById -> Note not found for ID: ${noteID}`
         );
       }
       return deleteNote;
     } catch (error: any) {
       this.logger.error(
-        `NotesService -> DeleteNoteById -> Error: ${error.message}`,
+        `NotesService -> DeleteNoteById -> Error: ${error.message}`
       );
       throw error;
     }
@@ -68,21 +78,23 @@ export class NotesService extends BaseService {
 
   async updateNoteById(noteID: string, noteData: Partial<INote>) {
     this.logger.info(
-      `NotesService -> UpdateNoteById -> Updating note with ID: ${noteID} and data: ${JSON.stringify(noteData)}`,
+      `NotesService -> UpdateNoteById -> Updating note with ID: ${noteID} and data: ${JSON.stringify(
+        noteData
+      )}`
     );
     try {
       const updatedNote = await this.NotesDao.updateNoteById(
         noteID,
         noteData,
-        noteData.userId,
+        noteData.userId
       );
       this.logger.info(
-        `NotesService -> UpdateNoteById -> Note updated successfully`,
+        `NotesService -> UpdateNoteById -> Note updated successfully`
       );
       return updatedNote;
     } catch (error: any) {
       this.logger.error(
-        `NotesService -> UpdateNoteById -> Error: ${error.message}`,
+        `NotesService -> UpdateNoteById -> Error: ${error.message}`
       );
       throw error;
     }
@@ -90,17 +102,19 @@ export class NotesService extends BaseService {
 
   async updateNoteOrder(userId: string, updatedOrder: string[]) {
     this.logger.info(
-      `NotesService -> UpdateNoteOrder -> Updating note order for user ID: ${userId} with order: ${JSON.stringify(updatedOrder)}`,
+      `NotesService -> UpdateNoteOrder -> Updating note order for user ID: ${userId} with order: ${JSON.stringify(
+        updatedOrder
+      )}`
     );
     try {
       const updated = await this.NotesDao.updateNoteOrder(userId, updatedOrder);
       this.logger.info(
-        `NotesService -> UpdateNoteOrder -> Note order updated successfully`,
+        `NotesService -> UpdateNoteOrder -> Note order updated successfully`
       );
       return updated;
     } catch (error: any) {
       this.logger.error(
-        `NotesService -> UpdateNoteOrder -> Error: ${error.message}`,
+        `NotesService -> UpdateNoteOrder -> Error: ${error.message}`
       );
       throw error;
     }

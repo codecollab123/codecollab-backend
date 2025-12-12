@@ -9,7 +9,7 @@ export interface IPofd extends Document {
   description: string;
   difficulty: "easy" | "medium" | "hard";
   source: string;
-  answer: string; // <-- added this
+  answer: string; 
   createdAt?: Date;
   date: string;
 }
