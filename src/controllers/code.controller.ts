@@ -1,7 +1,7 @@
 import { Controller, POST, Inject } from "fastify-decorators";
 import { FastifyRequest, FastifyReply } from "fastify";
-import { CODE_ENDPOINT, RUN_CODE_ENDPOINT } from "../constants/code.constant";
-import { CodeService } from "../services/code.service";
+import { CODE_ENDPOINT, RUN_CODE_ENDPOINT } from "../constants/code.constant.js";
+import { CodeService } from "../services/code.service.js";
 
 console.log("📂 CodeController file imported");
 

@@ -4,25 +4,25 @@ import {
   STATUS_CODES,
   ERROR_CODES,
   RESPONSE_MESSAGE,
-} from "../common/constants";
-import { AuthController } from "../common/auth.controller";
+} from "../common/constants.js";
+import { AuthController } from "../common/auth.controller.js";
 import {
   NOTIFICATION_ENDPOINT,
   NOTIFICATION_BY_ID_ENDPOINT,
   NOTIFICATION_CREATE_ENDPOINT,
   NOTIFICATION_DELETE_BY_ID_ENDPOINT,
   NOTIFICATION_GET_ALL_ENDPOINT,
-} from "../constants/notification.constant";
+} from "../constants/notification.constant.js";
 // import { NotificationService } from "../services";
-import { NotificationService } from "../services/notification.service";
-import { createNotificationSchema } from "../schema/v1/notification/notification.create";
-import { createNotificationBody } from "../types/v1/notification/createNotification";
-import { getNotificationSchema } from "../schema/v1/notification/notification.get";
-import { GetNotificationPathParams } from "../types/v1/notification/getNotification";
-import { deleteNotificationSchema } from "../schema/v1/notification/notification.delete";
-import { DeleteNotificationPathParams } from "../types/v1/notification/deleteNotification";
-import { PutNotificationBody } from "../types/v1/notification/updateNotification";
-import { updateNotificationSchema } from "../schema/v1/notification/notification.update";
+import { NotificationService } from "../services/notification.service.js";
+import { createNotificationSchema } from "../schema/v1/notification/notification.create.js";
+import { createNotificationBody } from "../types/v1/notification/createNotification.js";
+import { getNotificationSchema } from "../schema/v1/notification/notification.get.js";
+import { GetNotificationPathParams } from "../types/v1/notification/getNotification.js";
+import { deleteNotificationSchema } from "../schema/v1/notification/notification.delete.js";
+import { DeleteNotificationPathParams } from "../types/v1/notification/deleteNotification.js";
+import { PutNotificationBody } from "../types/v1/notification/updateNotification.js";
+import { updateNotificationSchema } from "../schema/v1/notification/notification.update.js";
 
 @Controller({ route: NOTIFICATION_ENDPOINT })
 export default class NotificationController extends AuthController {

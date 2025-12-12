@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
 import { Service } from "fastify-decorators";
-import { BaseDAO } from "../common/base.dao";
-import StudySoloModel, { IStudySolo } from "../models/studysolo.entity";
+import { BaseDAO } from "../common/base.dao.js";
+import StudySoloModel, { IStudySolo } from "../models/studysolo.entity.js";
 
 @Service()
 export class studySoloDao extends BaseDAO {

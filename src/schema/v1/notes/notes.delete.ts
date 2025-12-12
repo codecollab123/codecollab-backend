@@ -1,5 +1,5 @@
 import { FastifySchema } from "fastify";
-import { commonErrorResponses } from "../commonErrorCodes";
+import { commonErrorResponses } from "../commonErrorCodes.js";
 
 export const deleteNotesSchema: FastifySchema = {
   description: "API to delete notes",

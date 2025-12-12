@@ -1,5 +1,5 @@
 import { FastifySchema } from "fastify";
-import { commonErrorResponses } from "../commonErrorCodes";
+import { commonErrorResponses } from "../commonErrorCodes.js";
 
 export const deleteNotificationSchema: FastifySchema = {
   description: "API for deleting a Notification by ID",

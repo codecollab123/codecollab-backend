@@ -1,8 +1,8 @@
 import { Service, Inject } from "fastify-decorators";
-import { BaseService } from "../common/base.service";
-import { NotFoundError } from "../common/errors";
-import { ERROR_CODES, RESPONSE_MESSAGE } from "../common/constants";
-import { NotificationDAO } from "../dao/notification.dao";
+import { BaseService } from "../common/base.service.js";
+import { NotFoundError } from "../common/errors.js";
+import { ERROR_CODES, RESPONSE_MESSAGE } from "../common/constants.js";
+import { NotificationDAO } from "../dao/notification.dao.js";
 
 @Service()
 export class NotificationService extends BaseService {

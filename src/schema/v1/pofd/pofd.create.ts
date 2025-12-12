@@ -1,5 +1,5 @@
 import { FastifySchema } from "fastify";
-import { commonErrorResponses } from "../commonErrorCodes";
+import { commonErrorResponses } from "../commonErrorCodes.js";
 
 export const createPofdSchema: FastifySchema = {
   description: "Create a new problem of the day",

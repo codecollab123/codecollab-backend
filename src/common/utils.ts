@@ -4,7 +4,7 @@ import { createCipheriv, createDecipheriv, randomBytes, scrypt } from "crypto"; 
 // import * as bcrypt from "bcrypt"; // Importing bcrypt for password hashing.
 import { promisify } from "util"; // Importing promisify to convert callback-based functions to promise-based.
 
-import { STATUS_CODES, RESPONSE_MESSAGE } from "../common/constants"; // Importing constants for status codes and response messages.
+import { STATUS_CODES, RESPONSE_MESSAGE } from "../common/constants.js"; // Importing constants for status codes and response messages.
 import { Model } from "mongoose";
 
 // Generate a random 6-digit number

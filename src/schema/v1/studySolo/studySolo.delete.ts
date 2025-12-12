@@ -1,5 +1,5 @@
 import { FastifySchema } from "fastify";
-import { commonErrorResponses } from "../commonErrorCodes";
+import { commonErrorResponses } from "../commonErrorCodes.js";
 
 export const deleteStudySoloSchema: FastifySchema = {
   description: "API to delete a StudySolo by ID",

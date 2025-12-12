@@ -1,8 +1,8 @@
 import { Service, Inject } from "fastify-decorators";
-import { BaseService } from "../common/base.service";
-import { PofdDAO } from "../dao/pofd.dao";
-import { IPofd, PofdModel } from "../models/pofd.entity";
-import { GeminiPofdService } from "../common/services/geminiPofd.service";
+import { BaseService } from "../common/base.service.js";
+import { PofdDAO } from "../dao/pofd.dao.js";
+import { IPofd, PofdModel } from "../models/pofd.entity.js";
+import { GeminiPofdService } from "../common/services/geminiPofd.service.js";
 
 @Service()
 export class PofdService {

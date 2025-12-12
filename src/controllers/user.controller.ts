@@ -5,18 +5,18 @@ import {
   STATUS_CODES,
   ERROR_CODES,
   RESPONSE_MESSAGE,
-} from "../common/constants";
-import { BaseController } from "../common/base.controller";
+} from "../common/constants.js";
+import { BaseController } from "../common/base.controller.js";
 import {
   UPDATE_USER_PROFILE,
   USER_ENDPOINT,
   USER_ID_DETAILS_ENDPOINT,
-} from "../constants/user.constant";
-import { UserService } from "../services/user.service";
-import { updateUserSchema } from "../schema/v1/user/user.update";
-import { IUser } from "../models/user.entity";
-import { getUserDetails } from "../schema/v1/user/user.get";
-import { GetUserPathParams } from "../types/v1/user/getUser";
+} from "../constants/user.constant.js";
+import { UserService } from "../services/user.service.js";
+import { updateUserSchema } from "../schema/v1/user/user.update.js";
+import { IUser } from "../models/user.entity.js";
+import { getUserDetails } from "../schema/v1/user/user.get.js";
+import { GetUserPathParams } from "../types/v1/user/getUser.js";
 
 @Controller({ route: USER_ENDPOINT })
 export default class UserController extends BaseController {

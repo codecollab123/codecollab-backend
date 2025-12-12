@@ -1,2 +1,2 @@
-export * from "./logger.service";
-export * from "./firebase.service"
+export * from "./logger.service.js";
+export * from "./firebase.service.js";

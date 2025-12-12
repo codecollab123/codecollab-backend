@@ -1,5 +1,5 @@
 import { FastifySchema } from "fastify";
-import { commonErrorResponses } from "../commonErrorCodes";
+import { commonErrorResponses } from "../commonErrorCodes.js";
 
 // ✅ GET TOP 3–4 RECENT ACTIVITIES (Dashboard)
 export const getRecentActivitySchema: FastifySchema = {

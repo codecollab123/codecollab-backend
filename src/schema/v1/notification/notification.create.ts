@@ -6,7 +6,7 @@
  */
 
 import { FastifySchema } from "fastify";
-import { commonErrorResponses } from "../commonErrorCodes";
+import { commonErrorResponses } from "../commonErrorCodes.js";
 
 export const createNotificationSchema: FastifySchema = {
   description: "API for creating Notification",

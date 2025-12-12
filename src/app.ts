@@ -5,7 +5,7 @@ import cors from "@fastify/cors";
 import { initializeClients } from "./clients/index.js";
 import swagger from "@fastify/swagger";
 import swagger_ui from "@fastify/swagger-ui";
-import { logger } from "./common/services/logger.service";
+import { logger } from "./common/services/logger.service.js";
 import fs from "fs";
 import fastifyMultipart from "fastify-multipart";
 

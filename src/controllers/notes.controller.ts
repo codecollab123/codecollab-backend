@@ -8,7 +8,7 @@ import {
   POST,
   DELETE,
 } from "fastify-decorators";
-import { AuthController } from "../common/auth.controller";
+import { AuthController } from "../common/auth.controller.js";
 import {
   NOTES_END_POINT,
   CREATE_NOTE_END_POINT,
@@ -16,25 +16,25 @@ import {
   GET_NOTE_END_POINT,
   UPDATE_NOTE_BY_ID,
   UPDATE_NOTE_ORDER,
-} from "../constants/notes.constant";
-import { NotesService } from "../services/notes.service";
-import { createNotes } from "../types/v1/notes/createNotes";
+} from "../constants/notes.constant.js";
+import { NotesService } from "../services/notes.service.js";
+import { createNotes } from "../types/v1/notes/createNotes.js";
 import {
   ERROR_CODES,
   RESPONSE_MESSAGE,
   STATUS_CODES,
-} from "../common/constants";
-import { createNotesSchema } from "../schema/v1/notes/notes.create";
-import { getNotesSchema } from "../schema/v1/notes/notes.get";
-import { deleteNotesSchema } from "../schema/v1/notes/notes.delete";
-import { deleteNotes } from "../types/v1/notes/deleteNotes";
-import { updateNotesSchema } from "../schema/v1/notes/notes.update";
+} from "../common/constants.js";
+import { createNotesSchema } from "../schema/v1/notes/notes.create.js";
+import { getNotesSchema } from "../schema/v1/notes/notes.get.js";
+import { deleteNotesSchema } from "../schema/v1/notes/notes.delete.js";
+import { deleteNotes } from "../types/v1/notes/deleteNotes.js";
+import { updateNotesSchema } from "../schema/v1/notes/notes.update.js";
 import {
   PutNotesBody,
   PutNotesPathParams,
   UpdateNoteOrderBody,
-} from "../types/v1/notes/updateNotes";
-import { updateNoteOrderSchema } from "../schema/v1/notes/notesorder.update";
+} from "../types/v1/notes/updateNotes.js";
+import { updateNoteOrderSchema } from "../schema/v1/notes/notesorder.update.js";
 
 @Controller({ route: NOTES_END_POINT }) // Adjust to match your route prefix
 export default class NotesController extends AuthController {

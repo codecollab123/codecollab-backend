@@ -1,10 +1,10 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { Controller, POST } from "fastify-decorators";
-import { AuthController } from "../common/auth.controller";
-import { STATUS_CODES, RESPONSE_MESSAGE, ERROR_CODES } from "../common/constants";
-import { GEMINI_AI_END_POINT, CHAT_WITH_GEMINI } from "../constants/gemini.constant";
-import { GenerateChatBody } from "../types/v1/openai/generateAi";
-import { GeminiAiService } from "../common/services/geminiAi.service";
+import { AuthController } from "../common/auth.controller.js";
+import { STATUS_CODES, RESPONSE_MESSAGE, ERROR_CODES } from "../common/constants.js";
+import { GEMINI_AI_END_POINT, CHAT_WITH_GEMINI } from "../constants/gemini.constant.js";
+import { GenerateChatBody } from "../types/v1/openai/generateAi.js";
+import { GeminiAiService } from "../common/services/geminiAi.service.js";
 
 @Controller({ route: GEMINI_AI_END_POINT })  
 export default class GeminiController extends AuthController {

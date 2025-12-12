@@ -5,7 +5,7 @@ import {
   Inject,
 } from "fastify-decorators";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { Logger } from "./services/logger.service";
+import { Logger } from "./services/logger.service.js";
 
 // BaseService class provides base functionalities such as access to Fastify's request, reply, and logging utilities.
 // This can be extended by other service classes to reuse common logic and dependencies.

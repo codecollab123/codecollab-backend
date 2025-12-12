@@ -1,9 +1,9 @@
 import { Service } from "fastify-decorators";
-import NoteModel, { INote } from "../models/notes.entity";
-import NoteOrderModel, { INoteOrder } from "../models/notesOrder.entity";
-import { BaseDAO } from "../common/base.dao";
+import NoteModel, { INote } from "../models/notes.entity.js";
+import NoteOrderModel, { INoteOrder } from "../models/notesOrder.entity.js";
+import { BaseDAO } from "../common/base.dao.js";
 import { Model } from "mongoose";
-import { logger } from "../common/services";
+import { logger } from "../common/services/index.js";
 
 @Service()
 export class NotesDao extends BaseDAO {

@@ -1,10 +1,10 @@
 import { FastifySchema } from "fastify";
-import { commonErrorResponses } from "../commonErrorCodes";
+import { commonErrorResponses } from "../commonErrorCodes.js";
 import {
   LabelType,
   NotesEntityType,
   NoteType,
-} from "../../../models/notes.entity";
+} from "../../../models/notes.entity.js";
 
 export const updateNotesSchema: FastifySchema = {
   description: "API for updating a note",

@@ -1,7 +1,7 @@
 import {Service, Inject} from 'fastify-decorators';
-import { BaseService } from '../common/base.service';
-import { studySoloDao } from '../dao/studySolo.dao';
-import { ActivityService } from './activity.service';
+import { BaseService } from '../common/base.service.js';
+import { studySoloDao } from '../dao/studySolo.dao.js';
+import { ActivityService } from './activity.service.js';
 @Service()
 export class StudySoloService extends BaseService {
   @Inject(studySoloDao)

@@ -1,5 +1,5 @@
 import { FastifySchema } from "fastify";
-import { commonErrorResponses } from "../commonErrorCodes";
+import { commonErrorResponses } from "../commonErrorCodes.js";
 
 export const getUserByEmail: FastifySchema = {
   description: "API endpoint to retrieve a user by their email.",

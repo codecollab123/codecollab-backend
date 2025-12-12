@@ -9,15 +9,15 @@ import {
   STUDY_SOLO_DELETE_ENDPOINT,
   STUDY_SOLO_CREATE_ENDPOINT,
   STUDY_SOLO_GET_STREAK_BY_USER_ID_ENDPOINT
-} from "../constants/studysolo.constant";
-import { AuthController } from "../common/auth.controller";
-import { StudySoloService } from "../services/studySolo.service";
-import { ERROR_CODES, RESPONSE_MESSAGE, STATUS_CODES } from "../common/constants";
-import { createStudySoloSchema } from "../schema/v1/studySolo/studySolo.create";
-import { updateStudySoloSchema } from "../schema/v1/studySolo/studySolo.update";
-import { getAllStudySoloSchema, getStudySoloByUserIdSchema, getStudySoloSchema } from "../schema/v1/studySolo/studySolo.get";
-import { deleteStudySoloSchema } from "../schema/v1/studySolo/studySolo.delete";
-import { getStudyStreakByUserIdSchema } from "../schema/v1/studySolo/studySolo.get";
+} from "../constants/studysolo.constant.js";
+import { AuthController } from "../common/auth.controller.js";
+import { StudySoloService } from "../services/studySolo.service.js";
+import { ERROR_CODES, RESPONSE_MESSAGE, STATUS_CODES } from "../common/constants.js";
+import { createStudySoloSchema } from "../schema/v1/studySolo/studySolo.create.js";
+import { updateStudySoloSchema } from "../schema/v1/studySolo/studySolo.update.js";
+import { getAllStudySoloSchema, getStudySoloByUserIdSchema, getStudySoloSchema } from "../schema/v1/studySolo/studySolo.get.js";
+import { deleteStudySoloSchema } from "../schema/v1/studySolo/studySolo.delete.js";
+import { getStudyStreakByUserIdSchema } from "../schema/v1/studySolo/studySolo.get.js";
 
 
 

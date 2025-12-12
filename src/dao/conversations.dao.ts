@@ -1,4 +1,4 @@
-import { firestoreClient } from "../common/services/firestore.service";
+import { firestoreClient } from "../common/services/firestore.service.js";
 import { v4 as uuidv4 } from "uuid";
 
 interface Conversation {

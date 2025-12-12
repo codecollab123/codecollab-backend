@@ -4,19 +4,19 @@ import {
   ERROR_CODES,
   RESPONSE_MESSAGE,
   STATUS_CODES,
-} from "../common/constants";
+} from "../common/constants.js";
 
 import {
   PUBLIC_END_POINT,
   GET_USER_BY_EMAIL,
   GET_USER_BY_USERNAME,
-} from "../constants/public.constant";
-import { BaseController } from "../common/base.controller";
+} from "../constants/public.constant.js";
+import { BaseController } from "../common/base.controller.js";
 
-import { PublicService } from "../services/public.service";
-import { UserService } from "../services/user.service";
-import { getUserByEmail, getUserByUserName } from "../schema/v1/public/public.get";
-import { getUserEmailQuery, getUserNameQuery } from "../types/v1/public/public.get";
+import { PublicService } from "../services/public.service.js";
+import { UserService } from "../services/user.service.js";
+import { getUserByEmail, getUserByUserName } from "../schema/v1/public/public.get.js";
+import { getUserEmailQuery, getUserNameQuery } from "../types/v1/public/public.get.js";
 
 @Controller({ route: PUBLIC_END_POINT })
 export default class PublicController extends BaseController {

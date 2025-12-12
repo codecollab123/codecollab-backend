@@ -5,13 +5,13 @@ import {
   STATUS_CODES,
   ERROR_CODES,
   RESPONSE_MESSAGE,
-} from "../common/constants";
-import { BaseController } from "../common/base.controller";
-import { REGISTRATION_ENDPOINT } from "../constants/register.constant";
-import { UserService } from "../services/user.service";
-import { USER_ENDPOINT, USER_GOOGLE_LOGIN_ENDPOINT } from "../constants/user.constant";
-import { IUser } from "../models/user.entity";
-import { createUserSchema } from "../schema/v1/user/user.create";
+} from "../common/constants.js";
+import { BaseController } from "../common/base.controller.js";
+import { REGISTRATION_ENDPOINT } from "../constants/register.constant.js";
+import { UserService } from "../services/user.service.js";
+import { USER_ENDPOINT, USER_GOOGLE_LOGIN_ENDPOINT } from "../constants/user.constant.js";
+import { IUser } from "../models/user.entity.js";
+import { createUserSchema } from "../schema/v1/user/user.create.js";
 
 @Controller({ route: REGISTRATION_ENDPOINT })
 export default class RegisterController extends BaseController {

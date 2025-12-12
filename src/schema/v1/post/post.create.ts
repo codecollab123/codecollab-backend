@@ -1,6 +1,6 @@
 
 import { FastifySchema } from "fastify";
-import { commonErrorResponses } from "../commonErrorCodes";
+import { commonErrorResponses } from "../commonErrorCodes.js";
 
 export const createPostSchema: FastifySchema = {
   description: "API to create a new post",

@@ -11,16 +11,16 @@ import { POST_BASE_ENDPOINT,
   UPDATE_POST_BY_ID,
   GET_CONTRIBUTION_COUNT_BY_ID,
   GET_POST_BY_POST_ID
- } from "../constants/post.constant";
-import { AuthController } from "../common/auth.controller";
-import { PostService } from "../services/post.service";
-import { ERROR_CODES, RESPONSE_MESSAGE, STATUS_CODES } from "../common/constants";
+ } from "../constants/post.constant.js";
+import { AuthController } from "../common/auth.controller.js";
+import { PostService } from "../services/post.service.js";
+import { ERROR_CODES, RESPONSE_MESSAGE, STATUS_CODES } from "../common/constants.js";
 // import { createPostSchema } from "../schema/v1/post/post.create";
 
-import { createCommentsSchema, createPostSchema } from "../schema/v1/post/post.create";
-import { deletePostSchema } from "../schema/v1/post/post.delete";
-import { getBookmarksSchema, getCommentsSchema, getContributionCountSchema, getPostByIdSchema, getPostByUserIdSchema, getPostsSchema } from "../schema/v1/post/post.get";
-import { updatePostSchema } from "../schema/v1/post/post.update";
+import { createCommentsSchema, createPostSchema } from "../schema/v1/post/post.create.js";
+import { deletePostSchema } from "../schema/v1/post/post.delete.js";
+import { getBookmarksSchema, getCommentsSchema, getContributionCountSchema, getPostByIdSchema, getPostByUserIdSchema, getPostsSchema } from "../schema/v1/post/post.get.js";
+import { updatePostSchema } from "../schema/v1/post/post.update.js";
 
 @Controller({ route: POST_BASE_ENDPOINT })
 export default class PostController extends AuthController {

@@ -3,9 +3,9 @@ import {
   LabelType,
   NotesEntityType,
   NoteType,
-} from "../../../models/notes.entity";
+} from "../../../models/notes.entity.js";
 
-import { commonErrorResponses } from "../commonErrorCodes";
+import { commonErrorResponses } from "../commonErrorCodes.js";
 
 export const createNotesSchema: FastifySchema = {
   description: "API for creating notes",

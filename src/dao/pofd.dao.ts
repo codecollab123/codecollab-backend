@@ -1,6 +1,6 @@
 import { Model } from "mongoose";
 import { Service } from "fastify-decorators";
-import { IPofd, PofdModel } from "../models/pofd.entity";
+import { IPofd, PofdModel } from "../models/pofd.entity.js";
 import dayjs from "dayjs";
 
 @Service()

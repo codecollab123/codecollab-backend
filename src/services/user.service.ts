@@ -1,10 +1,10 @@
 import { Service, Inject } from "fastify-decorators";
-import { BaseService } from "../common/base.service";
-import { ConflictError, NotFoundError } from "../common/errors";
-import { ERROR_CODES, RESPONSE_MESSAGE } from "../common/constants";
-import { UserDAO } from "../dao/user.dao";
-import { IUser } from "../models/user.entity";
-import { firebaseClient } from "../common/services";
+import { BaseService } from "../common/base.service.js";
+import { ConflictError, NotFoundError } from "../common/errors.js";
+import { ERROR_CODES, RESPONSE_MESSAGE } from "../common/constants.js";
+import { UserDAO } from "../dao/user.dao.js";
+import { IUser } from "../models/user.entity.js";
+import { firebaseClient } from "../common/services/index.js";
 
 @Service()
 export class UserService extends BaseService {

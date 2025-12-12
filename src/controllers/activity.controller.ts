@@ -5,17 +5,17 @@ import {
   GET_RECENT_ACTIVITY_BY_USER,
   GET_LAST_24_HOURS_ACTIVITY,
   ACTIVITY_BASE_ENDPOINT,
-} from "../constants/activity.constant";
+} from "../constants/activity.constant.js";
 
-import { AuthController } from "../common/auth.controller";
-import { ActivityService } from "../services/activity.service";
-import { ERROR_CODES, RESPONSE_MESSAGE, STATUS_CODES } from "../common/constants";
+import { AuthController } from "../common/auth.controller.js";
+import { ActivityService } from "../services/activity.service.js";
+import { ERROR_CODES, RESPONSE_MESSAGE, STATUS_CODES } from "../common/constants.js";
 
 // ✅ ✅ ✅ FIXED RELATIVE IMPORT (VERY IMPORTANT)
 import {
   getRecentActivitySchema,
   getLast24HoursActivitySchema,
-} from "../schema/v1/activity/activity.get";
+} from "../schema/v1/activity/activity.get.js";
 
 @Controller({ route: ACTIVITY_BASE_ENDPOINT })
 export default class ActivityController extends AuthController {

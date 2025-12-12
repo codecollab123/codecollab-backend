@@ -9,15 +9,15 @@ import {
   BadRequestError,
   ConflictError,
   ServerError,
-} from "./errors";
+} from "./errors.js";
 import {
   FastifyInstanceToken,
   Inject,
   ErrorHandler,
   Hook,
 } from "fastify-decorators";
-import { Logger } from "./services/logger.service";
-import { ERROR_CODES } from "../common/constants";
+import { Logger } from "./services/logger.service.js";
+import { ERROR_CODES } from "../common/constants.js";
 
 /*
   Responsibilities of BaseController:

@@ -1,7 +1,7 @@
 import { Service } from "fastify-decorators";
 import { Model } from "mongoose";
-import { BaseDAO } from "../common/base.dao";
-import { INotification, NotificationModel } from "../models/notification.entity";
+import { BaseDAO } from "../common/base.dao.js";
+import { INotification, NotificationModel } from "../models/notification.entity.js";
 
 @Service()
 export class NotificationDAO extends BaseDAO {

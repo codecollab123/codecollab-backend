@@ -10,7 +10,7 @@ import mongoose, {
   ProjectionType,
   QueryOptions,
 } from "mongoose";
-import { logger } from "./services/logger.service";
+import { logger } from "./services/logger.service.js";
 
 @Service()
 export abstract class BaseDAO {

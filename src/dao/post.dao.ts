@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
 import { Service } from "fastify-decorators";
-import { BaseDAO } from "../common/base.dao";
-import PostModel, { IPost } from "../models/post.entity";
+import { BaseDAO } from "../common/base.dao.js";
+import PostModel, { IPost } from "../models/post.entity.js";
 
 @Service()
 export class PostDAO extends BaseDAO {

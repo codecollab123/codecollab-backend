@@ -1,7 +1,7 @@
 import { Controller, GET, Inject } from "fastify-decorators";
 import { FastifyRequest, FastifyReply } from "fastify";
-import { PODF_ENDPOINT, GET_TODAYS_PODF } from "../constants/pofd.constant";
-import { PofdService } from "../services/pofd.service";
+import { PODF_ENDPOINT, GET_TODAYS_PODF } from "../constants/pofd.constant.js";
+import { PofdService } from "../services/pofd.service.js";
 
 @Controller({ route: PODF_ENDPOINT })
 export default class PofdController {
