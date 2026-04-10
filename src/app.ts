@@ -142,21 +142,23 @@ export const configure = async () => {
     console.log("An error occurred during initialization:", error);
   }
 
-  if (!global.LAMBDA_ENV) {
-    console.log("Running App env");
+if (!global.LAMBDA_ENV) {
+  console.log("Running App env");
 
   const PORT = Number(process.env.PORT) || 5000;
-  if(!PORT){
-    throw new Error("Port not provide by Railway")
-  }
 
-app.listen({ port: PORT,host:"0.0.0.0" }, (err: any) => {
-  if (err) console.error(err);
-  console.log(`server listening on ${PORT}`);
-});
+  try {
+    const address = await app.listen({
+      port: PORT,
+      host: "0.0.0.0",
+    });
 
+    console.log(`Server running at ${address}`);
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
   }
-};
+}
 
 if (!global.LAMBDA_ENV) {
   configure();
