@@ -1,15 +1,13 @@
 import { FastifyInstance } from "fastify";
 import { Server } from "socket.io";
-import { createServer } from "http";
 import { logger } from "../common/services/logger.service.js";
 export const SocialFeedSocket = {
   async init(fastify: FastifyInstance) {
-    const httpServer = createServer(fastify.server);
-    const io = new Server(httpServer, {
+    const io = new Server(fastify.server, {
+      path: "/feed-socket", // Listen on a distinct path to avoid collision with main socket
       cors: {
-        origin: "http://localhost:3000",
+        origin: "*",
         methods: ["GET", "POST"],
-        credentials: true,
       },
     });
 
@@ -56,8 +54,6 @@ export const SocialFeedSocket = {
       });
     });
 
-    httpServer.listen(4001, () => {
-      logger.info("Social Feed WebSocket running on port 4001");
-    });
+    logger.info("Social Feed WebSocket attached to Fastify server on /feed-socket");
   },
 };

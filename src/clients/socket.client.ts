@@ -6,9 +6,8 @@ export namespace SocketClient {
   export async function init(fastify: FastifyInstance) {
     const io = new Server(fastify.server, {
       cors: {
-        origin: "http://localhost:3000",
+        origin: "*",
         methods: ["GET", "POST"],
-        credentials: true,
       },
     });
 
