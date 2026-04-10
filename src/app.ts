@@ -142,7 +142,7 @@ export const configure = async () => {
     console.log("An error occurred during initialization:", error);
   }
 
-if (!global.LAMBDA_ENV) {
+  if (!global.LAMBDA_ENV) {
   console.log("Running App env");
 
   const PORT = Number(process.env.PORT) || 5000;
@@ -159,6 +159,7 @@ if (!global.LAMBDA_ENV) {
     process.exit(1);
   }
 }
+};
 
 if (!global.LAMBDA_ENV) {
   configure();
