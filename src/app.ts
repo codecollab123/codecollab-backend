@@ -36,7 +36,7 @@ const app = fastify({
 
 
 // Env path for stages
-const envPath = process.env.NODE_ENV
+const envPath = process.env.NODE_ENV && fs.existsSync(`./.env.${process.env.NODE_ENV}`)
   ? `./.env.${process.env.NODE_ENV}`
   : "./.env";
 
