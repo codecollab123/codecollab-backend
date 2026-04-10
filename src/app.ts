@@ -149,7 +149,7 @@ export const configure = async () => {
 
   try {
     const address = await app.listen({
-      port: PORT || 8080,
+      port: PORT,
       host: "0.0.0.0",
     });
 
