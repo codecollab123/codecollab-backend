@@ -46,7 +46,7 @@ export const configure = async () => {
   // Register handlers auto-bootstrap
   app.register(fastifyEnv, {
     schema: schema,
-    dotenv: { path: envPath },
+    dotenv: false,
     data: process.env,
   });
 
@@ -145,7 +145,7 @@ export const configure = async () => {
   if (!global.LAMBDA_ENV) {
   console.log("Running App env");
 
-  const PORT = Number(process.env.PORT) || 5000;
+  const PORT = Number(process.env.PORT);
 
   try {
     const address = await app.listen({
